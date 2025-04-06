@@ -2,8 +2,6 @@
 
 #define LCD_HOST 1
 
-static uint16_t color_buf[240*320] = {0};
-
 static bool on_color_transmission_done(esp_lcd_panel_io_handle_t panel_io, esp_lcd_panel_io_event_data_t *edata, void *user_ctx);
 
 // bus variables
@@ -56,6 +54,10 @@ esp_lcd_panel_dev_config_t panel_config = {
     // .vendor_config = &vendor_config,           // Used to replace the initialization commands and parameters in the driver component
 };
 
+// portrait dimensions - flip when landscape
+static uint16_t lcd_width = 240;
+static uint16_t lcd_height = 320;
+
 static bool on_color_transmission_done(esp_lcd_panel_io_handle_t panel_io, esp_lcd_panel_io_event_data_t *edata, void *user_ctx)
 {
         /* Callback function when color data transmission is completed; perform operations here if needed */
@@ -81,30 +83,30 @@ void lcd_initialize_interface(void)
     // esp_lcd_panel_io_register_event_callbacks(io_handle, &cbs, &example_user_ctx);
 }
 
-void lcd_initialize_screen(void)
+esp_lcd_panel_handle_t lcd_initialize_screen(LCDOrientation_t orientation)
 {
     /* Create the LCD device */
     ESP_ERROR_CHECK(esp_lcd_new_panel_ili9341(io_handle, &panel_config, &panel_handle));
+
+    lcd_width = orientation > 1 ? 320 : 240;
+    lcd_height = orientation > 1 ? 240 : 320;
 
     /* Initialize the LCD device */
     ESP_ERROR_CHECK(esp_lcd_panel_reset(panel_handle));
     ESP_ERROR_CHECK(esp_lcd_panel_init(panel_handle));
     // ESP_ERROR_CHECK(esp_lcd_panel_invert_color(panel_handle, true));   // Use these functions as needed
-    ESP_ERROR_CHECK(esp_lcd_panel_mirror(panel_handle, false, true));
-    ESP_ERROR_CHECK(esp_lcd_panel_swap_xy(panel_handle, true));
+    ESP_ERROR_CHECK(esp_lcd_panel_mirror(panel_handle, orientation == 1, orientation == 3));
+    ESP_ERROR_CHECK(esp_lcd_panel_swap_xy(panel_handle, orientation > 1));
     // ESP_ERROR_CHECK(esp_lcd_panel_set_gap(panel_handle, 0, 0));
     ESP_ERROR_CHECK(esp_lcd_panel_disp_on_off(panel_handle, true));
 
-    for (int i = 0; i < 76800; i++)
-    {
-        uint16_t x = i % 320;
-        uint16_t y = i / 320;
-        memset(color_buf, (uint16_t)(UINT16_MAX * ((float)i/76800.0f)), sizeof(color_buf));
-        ESP_ERROR_CHECK(esp_lcd_panel_draw_bitmap(panel_handle, x, y, x+1, y+1, color_buf));
-    }
+    return panel_handle;
 }
 
 void lcd_deinitialize_screen(void)
 {
     esp_lcd_panel_del(panel_handle);
 }
+
+uint16_t lcd_get_width(void) { return lcd_width; }
+uint16_t lcd_get_height(void) { return lcd_height; }

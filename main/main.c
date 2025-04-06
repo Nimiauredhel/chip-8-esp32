@@ -13,7 +13,8 @@
 #include "esp_flash.h"
 #include "esp_system.h"
 
-#include "lcd.h"
+#include "gfx.h"
+#include "app.h"
 
 void app_main(void)
 {
@@ -44,16 +45,14 @@ void app_main(void)
 
     printf("Minimum free heap size: %" PRIu32 " bytes\n", esp_get_minimum_free_heap_size());
 
-    lcd_initialize_bus();
-    lcd_initialize_interface();
-    lcd_initialize_screen();
+    app_init();
+    app_loop();
+    app_clean();
 
-    for (int i = 10; i >= 0; i--) {
+    for (int i = 1; i >= 0; i--) {
         printf("Restarting in %d seconds...\n", i);
         vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
-
-    lcd_deinitialize_screen();
 
     printf("Restarting now.\n");
     fflush(stdout);

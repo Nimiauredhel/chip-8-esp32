@@ -1,3 +1,3 @@
-idf_component_register(SRCS "main.c" "lcd.c"
+idf_component_register(SRC_DIRS "." "lcd" "utils" "gfx"
                     PRIV_REQUIRES spi_flash
-                    INCLUDE_DIRS "")
+                    INCLUDE_DIRS "." "lcd" "utils" "gfx")
