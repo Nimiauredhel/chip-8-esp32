@@ -16,6 +16,8 @@
 #include "screen.h"
 #include "fonts.h"
 
+#include "driver/gptimer.h"
+
 #define GFX_SCREEN_WIDTH 320
 #define GFX_SCREEN_HEIGHT 240
 #define GFX_SCREEN_SIZE_BYTES (GFX_SCREEN_WIDTH * GFX_SCREEN_HEIGHT * 2)

@@ -1,0 +1,103 @@
+[0;33m--- esp-idf-monitor 1.6.0 on /dev/ttyUSB0 115200[0m
+[0;33m--- Quit: Ctrl+] | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x40081a2d: panic_abort at /home/mickey/esp/esp-idf/components/esp_system/panic.c:454
+--- 0x40086e19: esp_system_abort at /home/mickey/esp/esp-idf/components/esp_system/port/esp_system_chip.c:87
+--- 0x4008d765: __assert_func at /home/mickey/esp/esp-idf/components/newlib/assert.c:80
+--- 0x400dbafe: timer_ll_set_clock_prescale at /home/mickey/esp/esp-idf/components/hal/esp32/include/hal/timer_ll.h:135 (discriminator 1)
+--- 0x400dbd33: gptimer_select_periph_clock at /home/mickey/esp/esp-idf/components/esp_driver_gptimer/src/gptimer_common.c:156
+--- 0x400e8041: gptimer_new_timer at /home/mickey/esp/esp-idf/components/esp_driver_gptimer/src/gptimer.c:173
+--- 0x400d7777: gfx_init at /home/mickey/Repos/chip-8-esp32/main/gfx/gfx.c:75
+--- 0x400d6ef5: app_init at /home/mickey/Repos/chip-8-esp32/main/gfx/app.c:108
+--- 0x400d6eb5: app_main at /home/mickey/Repos/chip-8-esp32/main/main.c:48
+--- 0x400e8d7c: main_task at /home/mickey/esp/esp-idf/components/freertos/app_startup.c:208
+--- 0x40087801: vPortTaskWrapper at /home/mickey/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x40081a2d: panic_abort at /home/mickey/esp/esp-idf/components/esp_system/panic.c:454
+--- 0x40086e19: esp_system_abort at /home/mickey/esp/esp-idf/components/esp_system/port/esp_system_chip.c:87
+--- 0x4008d765: __assert_func at /home/mickey/esp/esp-idf/components/newlib/assert.c:80
+--- 0x400dbafe: timer_ll_set_clock_prescale at /home/mickey/esp/esp-idf/components/hal/esp32/include/hal/timer_ll.h:135 (discriminator 1)
+--- 0x400dbd33: gptimer_select_periph_clock at /home/mickey/esp/esp-idf/components/esp_driver_gptimer/src/gptimer_common.c:156
+--- 0x400e8041: gptimer_new_timer at /home/mickey/esp/esp-idf/components/esp_driver_gptimer/src/gptimer.c:173
+--- 0x400d7777: gfx_init at /home/mickey/Repos/chip-8-esp32/main/gfx/gfx.c:75
+--- 0x400d6ef5: app_init at /home/mickey/Repos/chip-8-esp32/main/gfx/app.c:108
+--- 0x400d6eb5: app_main at /home/mickey/Repos/chip-8-esp32/main/main.c:48
+--- 0x400e8d7c: main_task at /home/mickey/esp/esp-idf/components/freertos/app_startup.c:208
+--- 0x40087801: vPortTaskWrapper at /home/mickey/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x40081a2d: panic_abort at /home/mickey/esp/esp-idf/components/esp_system/panic.c:454
+--- 0x40086e19: esp_system_abort at /home/mickey/esp/esp-idf/components/esp_system/port/esp_system_chip.c:87
+--- 0x4008d765: __assert_func at /home/mickey/esp/esp-idf/components/newlib/assert.c:80
+--- 0x400dbafe: timer_ll_set_clock_prescale at /home/mickey/esp/esp-idf/components/hal/esp32/include/hal/timer_ll.h:135 (discriminator 1)
+--- 0x400dbd33: gptimer_select_periph_clock at /home/mickey/esp/esp-idf/components/esp_driver_gptimer/src/gptimer_common.c:156
+--- 0x400e8041: gptimer_new_timer at /home/mickey/esp/esp-idf/components/esp_driver_gptimer/src/gptimer.c:173
+--- 0x400d7777: gfx_init at /home/mickey/Repos/chip-8-esp32/main/gfx/gfx.c:75
+--- 0x400d6ef5: app_init at /home/mickey/Repos/chip-8-esp32/main/gfx/app.c:108
+--- 0x400d6eb5: app_main at /home/mickey/Repos/chip-8-esp32/main/main.c:48
+--- 0x400e8d7c: main_task at /home/mickey/esp/esp-idf/components/freertos/app_startup.c:208
+--- 0x40087801: vPortTaskWrapper at /home/mickey/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x40081a2d: panic_abort at /home/mickey/esp/esp-idf/components/esp_system/panic.c:454
+--- 0x40086e19: esp_system_abort at /home/mickey/esp/esp-idf/components/esp_system/port/esp_system_chip.c:87
+--- 0x4008d765: __assert_func at /home/mickey/esp/esp-idf/components/newlib/assert.c:80
+--- 0x400dbafe: timer_ll_set_clock_prescale at /home/mickey/esp/esp-idf/components/hal/esp32/include/hal/timer_ll.h:135 (discriminator 1)
+--- 0x400dbd33: gptimer_select_periph_clock at /home/mickey/esp/esp-idf/components/esp_driver_gptimer/src/gptimer_common.c:156
+--- 0x400e8041: gptimer_new_timer at /home/mickey/esp/esp-idf/components/esp_driver_gptimer/src/gptimer.c:173
+--- 0x400d7777: gfx_init at /home/mickey/Repos/chip-8-esp32/main/gfx/gfx.c:75
+--- 0x400d6ef5: app_init at /home/mickey/Repos/chip-8-esp32/main/gfx/app.c:108
+--- 0x400d6eb5: app_main at /home/mickey/Repos/chip-8-esp32/main/main.c:48
+--- 0x400e8d7c: main_task at /home/mickey/esp/esp-idf/components/freertos/app_startup.c:208
+--- 0x40087801: vPortTaskWrapper at /home/mickey/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x40081a2d: panic_abort at /home/mickey/esp/esp-idf/components/esp_system/panic.c:454
+--- 0x40086e19: esp_system_abort at /home/mickey/esp/esp-idf/components/esp_system/port/esp_system_chip.c:87
+--- 0x4008d765: __assert_func at /home/mickey/esp/esp-idf/components/newlib/assert.c:80
+--- 0x400dbafe: timer_ll_set_clock_prescale at /home/mickey/esp/esp-idf/components/hal/esp32/include/hal/timer_ll.h:135 (discriminator 1)
+--- 0x400dbd33: gptimer_select_periph_clock at /home/mickey/esp/esp-idf/components/esp_driver_gptimer/src/gptimer_common.c:156
+--- 0x400e8041: gptimer_new_timer at /home/mickey/esp/esp-idf/components/esp_driver_gptimer/src/gptimer.c:173
+--- 0x400d7777: gfx_init at /home/mickey/Repos/chip-8-esp32/main/gfx/gfx.c:75
+--- 0x400d6ef5: app_init at /home/mickey/Repos/chip-8-esp32/main/gfx/app.c:108
+--- 0x400d6eb5: app_main at /home/mickey/Repos/chip-8-esp32/main/main.c:48
+--- 0x400e8d7c: main_task at /home/mickey/esp/esp-idf/components/freertos/app_startup.c:208
+--- 0x40087801: vPortTaskWrapper at /home/mickey/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x40081a2d: panic_abort at /home/mickey/esp/esp-idf/components/esp_system/panic.c:454
+--- 0x40086e19: esp_system_abort at /home/mickey/esp/esp-idf/components/esp_system/port/esp_system_chip.c:87
+--- 0x4008d765: __assert_func at /home/mickey/esp/esp-idf/components/newlib/assert.c:80
+--- 0x400dbafe: timer_ll_set_clock_prescale at /home/mickey/esp/esp-idf/components/hal/esp32/include/hal/timer_ll.h:135 (discriminator 1)
+--- 0x400dbd33: gptimer_select_periph_clock at /home/mickey/esp/esp-idf/components/esp_driver_gptimer/src/gptimer_common.c:156
+--- 0x400e8041: gptimer_new_timer at /home/mickey/esp/esp-idf/components/esp_driver_gptimer/src/gptimer.c:173
+--- 0x400d7777: gfx_init at /home/mickey/Repos/chip-8-esp32/main/gfx/gfx.c:75
+--- 0x400d6ef5: app_init at /home/mickey/Repos/chip-8-esp32/main/gfx/app.c:108
+--- 0x400d6eb5: app_main at /home/mickey/Repos/chip-8-esp32/main/main.c:48
+--- 0x400e8d7c: main_task at /home/mickey/esp/esp-idf/components/freertos/app_startup.c:208
+--- 0x40087801: vPortTaskWrapper at /home/mickey/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x40081a2d: panic_abort at /home/mickey/esp/esp-idf/components/esp_system/panic.c:454
+--- 0x40086e19: esp_system_abort at /home/mickey/esp/esp-idf/components/esp_system/port/esp_system_chip.c:87
+--- 0x4008d765: __assert_func at /home/mickey/esp/esp-idf/components/newlib/assert.c:80
+--- 0x400dbafe: timer_ll_set_clock_prescale at /home/mickey/esp/esp-idf/components/hal/esp32/include/hal/timer_ll.h:135 (discriminator 1)
+--- 0x400dbd33: gptimer_select_periph_clock at /home/mickey/esp/esp-idf/components/esp_driver_gptimer/src/gptimer_common.c:156
+--- 0x400e8041: gptimer_new_timer at /home/mickey/esp/esp-idf/components/esp_driver_gptimer/src/gptimer.c:173
+--- 0x400d7777: gfx_init at /home/mickey/Repos/chip-8-esp32/main/gfx/gfx.c:75
+--- 0x400d6ef5: app_init at /home/mickey/Repos/chip-8-esp32/main/gfx/app.c:108
+--- 0x400d6eb5: app_main at /home/mickey/Repos/chip-8-esp32/main/main.c:48
+[0m
+[0;33m--- 0x40087801: vPortTaskWrapper at /home/mickey/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0m

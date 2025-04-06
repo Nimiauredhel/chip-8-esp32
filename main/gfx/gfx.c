@@ -6,7 +6,6 @@
  */
 
 #include "gfx.h"
-#include <stdbool.h>
 
 // RGB565 2 byte format: [RrrrrGgg][gggBbbbb]
 const Color565_t color_black = { 0b00000000, 0b00000000 };
@@ -44,8 +43,7 @@ static GfxWindow_t *window_list = NULL;
  */
 static GfxWindow_t *selected_window = NULL;
 
-/*
-void GFX_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
+bool gfx_refresh_timer_callback(gptimer_handle_t timer, const gptimer_alarm_event_data_t *edata, void *user_ctx)
 {
 	GfxWindow_t *current = window_list;
 
@@ -54,15 +52,45 @@ void GFX_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
 		gfx_push_to_screen(current);
 		current = current->next;
 	}
-}*/
+
+    gptimer_set_raw_count(timer, 0);
+
+    return true;
+}
+
 
 void gfx_init(LCDOrientation_t orientation)
 {
+    static const gptimer_config_t refresh_timer_config =
+    {
+        .clk_src = GPTIMER_CLK_SRC_APB,
+        .direction = GPTIMER_COUNT_UP,
+        .resolution_hz = 1000000,
+    };
+
+    static const gptimer_alarm_config_t refresh_timer_alarm =
+    {
+        .flags.auto_reload_on_alarm = 1,
+        .alarm_count = 33333,
+        .reload_count = 0,
+    };
+
+    static const gptimer_event_callbacks_t callback = { .on_alarm = gfx_refresh_timer_callback };
+
 	if (initialized) return;
+
 	screen_init(orientation);
-	//HAL_TIM_RegisterCallback(&htim2, HAL_TIM_PERIOD_ELAPSED_CB_ID, GFX_TIM_PeriodElapsedCallback);
+
+    gptimer_handle_t refresh_timer_handle;
+
+    ESP_ERROR_CHECK(gptimer_new_timer(&refresh_timer_config, &refresh_timer_handle));
+    ESP_ERROR_CHECK(gptimer_register_event_callbacks(refresh_timer_handle, &callback, NULL));
+    ESP_ERROR_CHECK(gptimer_set_alarm_action(refresh_timer_handle, &refresh_timer_alarm));
+    ESP_ERROR_CHECK(gptimer_enable(refresh_timer_handle));
+    ESP_ERROR_CHECK(gptimer_set_raw_count(refresh_timer_handle, 0));
+    ESP_ERROR_CHECK(gptimer_start(refresh_timer_handle));
+
 	initialized = true;
-	//HAL_TIM_Base_Start_IT(&htim2);
 }
 
 GfxWindow_t *gfx_create_window(uint16_t x, uint16_t y, uint16_t width, uint16_t height)

@@ -134,7 +134,7 @@ void app_clean(void)
     vTaskDelay(pdMS_TO_TICKS(step_delay));
 	app_window->state = GFXWIN_WRITING;
 	gfx_fill_screen(color_black);
-	app_window->state = GFXWIN_DIRTY; gfx_push_to_screen(app_window);
+	app_window->state = GFXWIN_DIRTY;
 
 	gfx_select_window(NULL);
 	// remove window reference from the refresh list before deallocating
@@ -151,7 +151,7 @@ void app_loop(void)
 
 	app_window->state = GFXWIN_WRITING;
 	gfx_fill_screen(color_black);
-	app_window->state = GFXWIN_DIRTY; gfx_push_to_screen(app_window);
+	app_window->state = GFXWIN_DIRTY;
 
 	// add window to the refresh list
 	gfx_show_window(app_window);
@@ -175,7 +175,7 @@ void app_loop(void)
 		&default_font.data[(i+32)*5], x, y*5*4, color_white, 3);
 	}
 
-	app_window->state = GFXWIN_DIRTY; gfx_push_to_screen(app_window);
+	app_window->state = GFXWIN_DIRTY;
 	while (app_window->state != GFXWIN_CLEAN)
         vTaskDelay(pdMS_TO_TICKS(half_step_delay));
 
@@ -183,7 +183,7 @@ void app_loop(void)
 
 	app_window->state = GFXWIN_WRITING;
 	gfx_fill_screen(color_black);
-	app_window->state = GFXWIN_DIRTY; gfx_push_to_screen(app_window);
+	app_window->state = GFXWIN_DIRTY;
 	while (app_window->state != GFXWIN_CLEAN)
         vTaskDelay(pdMS_TO_TICKS(step_delay));
 
@@ -193,7 +193,7 @@ void app_loop(void)
 	gfx_print_string("Text test!", 0, 4, color_red, 3);
 	gfx_print_string("Medium text...", 8, 32, color_magenta, 2);
 	gfx_print_string("small text !@#$%^&*()", 16, 64, color_yellow, 1);
-	app_window->state = GFXWIN_DIRTY; gfx_push_to_screen(app_window);
+	app_window->state = GFXWIN_DIRTY;
 	while (app_window->state != GFXWIN_CLEAN)
         vTaskDelay(pdMS_TO_TICKS(half_step_delay));
 
@@ -205,7 +205,7 @@ void app_loop(void)
 
 	app_window->state = GFXWIN_WRITING;
 	gfx_fill_screen(color_white);
-	app_window->state = GFXWIN_DIRTY; gfx_push_to_screen(app_window);
+	app_window->state = GFXWIN_DIRTY;
 	while (app_window->state != GFXWIN_CLEAN)
         vTaskDelay(pdMS_TO_TICKS(half_step_delay));
 
@@ -215,7 +215,7 @@ void app_loop(void)
 	htim9.Instance->CCR1 = pitch/2;*/
 	app_window->state = GFXWIN_WRITING;
 	gfx_fill_screen(color_red);
-	app_window->state = GFXWIN_DIRTY; gfx_push_to_screen(app_window);
+	app_window->state = GFXWIN_DIRTY;
 	while (app_window->state != GFXWIN_CLEAN)
         vTaskDelay(pdMS_TO_TICKS(half_step_delay));
 
@@ -225,7 +225,7 @@ void app_loop(void)
 	htim9.Instance->CCR1 = pitch/2;*/
 	app_window->state = GFXWIN_WRITING;
 	gfx_fill_screen(color_green);
-	app_window->state = GFXWIN_DIRTY; gfx_push_to_screen(app_window);
+	app_window->state = GFXWIN_DIRTY;
 	while (app_window->state != GFXWIN_CLEAN)
         vTaskDelay(pdMS_TO_TICKS(half_step_delay));
 
@@ -235,7 +235,7 @@ void app_loop(void)
 	htim9.Instance->CCR1 = pitch/2;*/
 	app_window->state = GFXWIN_WRITING;
 	gfx_fill_screen(color_blue);
-	app_window->state = GFXWIN_DIRTY; gfx_push_to_screen(app_window);
+	app_window->state = GFXWIN_DIRTY;
 	while (app_window->state != GFXWIN_CLEAN)
         vTaskDelay(pdMS_TO_TICKS(half_step_delay));
 
@@ -245,7 +245,7 @@ void app_loop(void)
 	htim9.Instance->CCR1 = pitch/2;*/
 	app_window->state = GFXWIN_WRITING;
 	gfx_fill_screen(color_cyan);
-	app_window->state = GFXWIN_DIRTY; gfx_push_to_screen(app_window);
+	app_window->state = GFXWIN_DIRTY;
 	while (app_window->state != GFXWIN_CLEAN)
         vTaskDelay(pdMS_TO_TICKS(half_step_delay));
 
@@ -255,7 +255,7 @@ void app_loop(void)
 	htim9.Instance->CCR1 = pitch/2;*/
 	app_window->state = GFXWIN_WRITING;
 	gfx_fill_screen(color_yellow);
-	app_window->state = GFXWIN_DIRTY; gfx_push_to_screen(app_window);
+	app_window->state = GFXWIN_DIRTY;
 	while (app_window->state != GFXWIN_CLEAN)
         vTaskDelay(pdMS_TO_TICKS(half_step_delay));
 
@@ -265,7 +265,7 @@ void app_loop(void)
 	htim9.Instance->CCR1 = pitch/2;*/
 	app_window->state = GFXWIN_WRITING;
 	gfx_fill_screen(color_magenta);
-	app_window->state = GFXWIN_DIRTY; gfx_push_to_screen(app_window);
+	app_window->state = GFXWIN_DIRTY;
 	while (app_window->state != GFXWIN_CLEAN)
         vTaskDelay(pdMS_TO_TICKS(half_step_delay));
 
@@ -275,7 +275,7 @@ void app_loop(void)
 	htim9.Instance->CCR1 = pitch/2;*/
 	app_window->state = GFXWIN_WRITING;
 	gfx_fill_screen(color_black);
-	app_window->state = GFXWIN_DIRTY; gfx_push_to_screen(app_window);
+	app_window->state = GFXWIN_DIRTY;
 	while (app_window->state != GFXWIN_CLEAN)
         vTaskDelay(pdMS_TO_TICKS(half_step_delay));
 
@@ -371,7 +371,7 @@ void app_loop(void)
 		scale += 0.25f;
 		app_window->state = GFXWIN_WRITING;
 		gfx_fill_rect_loop(color_loop, color_loop_length, 160 - (160 * scale), 120 - (120 * scale), 320 * scale, 240 * scale);
-		app_window->state = GFXWIN_DIRTY; gfx_push_to_screen(app_window);
+		app_window->state = GFXWIN_DIRTY;
 
 		/*HAL_TIM_PWM_Start(&htim9, TIM_CHANNEL_1);
 		htim9.Instance->ARR = pitch = D2 * scale;
@@ -399,7 +399,7 @@ void app_loop(void)
 	gfx_draw_binary_sprite(world_sprite, 160-20+2, 120+10, world_color, 1);
 	gfx_draw_binary_sprite(alien_sprite, 16, 130, alien_color, 11);
 
-	app_window->state = GFXWIN_DIRTY; gfx_push_to_screen(app_window);
+	app_window->state = GFXWIN_DIRTY;
 	while (app_window->state != GFXWIN_CLEAN)
         vTaskDelay(pdMS_TO_TICKS(step_delay));
 
@@ -412,7 +412,7 @@ void app_loop(void)
 	gfx_draw_binary_sprite(world_sprite, 160-40+4, 120+10, world_color, 2);
 	gfx_draw_binary_sprite(alien_sprite, 32, 130, alien_color, 10);
 
-	app_window->state = GFXWIN_DIRTY; gfx_push_to_screen(app_window);
+	app_window->state = GFXWIN_DIRTY;
 	/*htim9.Instance->ARR = pitch = C2;
 	htim9.Instance->CCR1 = pitch/2;
 	HAL_TIM_PWM_Start(&htim9, TIM_CHANNEL_1);*/
@@ -427,7 +427,7 @@ void app_loop(void)
 	gfx_draw_binary_sprite(world_sprite, 160-80+8, 120+10, world_color, 4);
 	gfx_draw_binary_sprite(alien_sprite, 48, 130, alien_color, 9);
 
-	app_window->state = GFXWIN_DIRTY; gfx_push_to_screen(app_window);
+	app_window->state = GFXWIN_DIRTY;
 	/*htim9.Instance->ARR = pitch = Gb2;
 	htim9.Instance->CCR1 = pitch/2;*/
 	while (app_window->state != GFXWIN_CLEAN)
@@ -442,7 +442,7 @@ void app_loop(void)
 	gfx_draw_binary_sprite(world_sprite, 24, 120+18, color_black, 8);
 	gfx_draw_binary_sprite(hello_sprite, 16, 120-50, hello_color, 8);
 	gfx_draw_binary_sprite(world_sprite, 16, 120+10, world_color, 8);
-	app_window->state = GFXWIN_DIRTY; gfx_push_to_screen(app_window);
+	app_window->state = GFXWIN_DIRTY;
 	/*htim9.Instance->ARR = pitch = C3;
 	htim9.Instance->CCR1 = pitch/2;*/
 	while (app_window->state != GFXWIN_CLEAN)
@@ -459,7 +459,7 @@ void app_loop(void)
 		app_window->state = GFXWIN_WRITING;
 		gfx_fill_rect_loop(color_loop, color_loop_length, 0, 120, 320, 120);
 		gfx_draw_binary_sprite(alien_sprite, alien_x, 130, alien_color, 8);
-		app_window->state = GFXWIN_DIRTY; gfx_push_to_screen(app_window);
+		app_window->state = GFXWIN_DIRTY;
 		/*htim9.Instance->ARR = pitch = (Gb1 * (1 + alien_x / 320));
 		htim9.Instance->CCR1 = pitch/2;
 		HAL_TIM_PWM_Start(&htim9, TIM_CHANNEL_1);
