@@ -7,23 +7,18 @@
 
 #include "keypad.h"
 
-KeypadGPIO_t keypad_columns[4] =
+static const uint8_t keypad_columns[4] =
 {
-		{ .pin = KEYPAD_C1_Pin, .port = KEYPAD_C1_GPIO_Port },
-		{ .pin = KEYPAD_C2_Pin, .port = KEYPAD_C2_GPIO_Port },
-		{ .pin = KEYPAD_C3_Pin, .port = KEYPAD_C3_GPIO_Port },
-		{ .pin = KEYPAD_C4_Pin, .port = KEYPAD_C4_GPIO_Port },
+    25, 26, 27, 14,
+
 };
 
-KeypadGPIO_t keypad_rows[4] =
+static const uint8_t keypad_rows[4] =
 {
-		{ .pin = KEYPAD_R1_Pin, .port = KEYPAD_R1_GPIO_Port },
-		{ .pin = KEYPAD_R2_Pin, .port = KEYPAD_R2_GPIO_Port },
-		{ .pin = KEYPAD_R3_Pin, .port = KEYPAD_R3_GPIO_Port },
-		{ .pin = KEYPAD_R4_Pin, .port = KEYPAD_R4_GPIO_Port },
+    34, 35, 32, 33,
 };
 
-uint8_t keypad_values[4][4] =
+static const uint8_t keypad_values[4][4] =
 {
 		{0x1, 0x2, 0x3, 0xA},
 		{0x4, 0x5, 0x6, 0xB},
@@ -31,37 +26,63 @@ uint8_t keypad_values[4][4] =
 		{0xE, 0x0, 0xF, 0xD},
 };
 
+static const gpio_config_t row_config =
+{
+    .pull_down_en = GPIO_PULLDOWN_ENABLE,
+    .pull_up_en = GPIO_PULLUP_DISABLE,
+    .mode = GPIO_MODE_DEF_INPUT,
+    .pin_bit_mask = keypad_rows[0] | keypad_rows[1] | keypad_rows[2] | keypad_rows[3],
+
+}; 
+
+static const gpio_config_t col_config =
+{
+    .pull_down_en = GPIO_PULLDOWN_DISABLE,
+    .pull_up_en = GPIO_PULLUP_DISABLE,
+    .mode = GPIO_MODE_DEF_OUTPUT,
+    .pin_bit_mask = keypad_columns[0] | keypad_columns[1] | keypad_columns[2] | keypad_columns[3],
+}; 
+
+static bool initialized = false;
+
+void keypad_initialize(void)
+{
+    gpio_config(&row_config);
+    gpio_config(&col_config);
+}
+
 uint16_t keypad_get_state(void)
 {
 	uint8_t i;
 	uint16_t state = 0x0000;
 
+    if (!initialized)
+    {
+        keypad_initialize();
+        initialized = true;
+    }
+
 	// pull all back low
 	for (i = 0; i < 4; i++)
 	{
-		HAL_GPIO_WritePin(keypad_columns[i].port, keypad_columns[i].pin, GPIO_PIN_RESET);
+        gpio_set_level(keypad_columns[i], 0);
 	}
 
 	for (uint8_t c = 0; c < 4; c++)
 	{
-		HAL_GPIO_WritePin(keypad_columns[c].port, keypad_columns[c].pin, GPIO_PIN_SET);
+        gpio_set_level(keypad_columns[c], 1);
 
 		for (uint8_t r = 0; r < 4; r++)
 		{
-			if (HAL_GPIO_ReadPin(keypad_rows[r].port, keypad_rows[r].pin))
+            
+			if (gpio_get_level(keypad_rows[r]))
 			{
 				state |= (1 << keypad_values[r][c]);
 			}
 		}
 
-		HAL_GPIO_WritePin(keypad_columns[c].port, keypad_columns[c].pin, GPIO_PIN_RESET);
+        gpio_set_level(keypad_columns[c], 0);
 	}
 
-	// pull all back low
-	for (i = 0; i < 4; i++)
-	{
-		HAL_GPIO_WritePin(keypad_rows[i].port, keypad_rows[i].pin, GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(keypad_columns[i].port, keypad_columns[i].pin, GPIO_PIN_RESET);
-	}
 	return state;
 }

@@ -11,12 +11,9 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-uint16_t keypad_get_state(void);
+#include "driver/gpio.h"
 
-typedef struct KeypadGPIO
-{
-	GPIO_TypeDef *port;
-	uint16_t pin;
-} KeypadGPIO_t;
+void keypad_initialize(void);
+uint16_t keypad_get_state(void);
 
 #endif /* KEYPAD_H_ */

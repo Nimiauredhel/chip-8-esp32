@@ -1,7 +1,7 @@
 {
     "version":            "1.2",
     "project_name":       "esp32_ili9341",
-    "project_version":    "1e263ee-dirty",
+    "project_version":    "7616b4b-dirty",
     "project_path":       "/home/mickey/Repos/chip-8-esp32",
     "idf_path":           "/home/mickey/esp/esp-idf",
     "build_dir":          "/home/mickey/Repos/chip-8-esp32/build",
@@ -1210,8 +1210,8 @@
             "managed_reqs": [],
             "managed_priv_reqs": [ "espressif__esp_lcd_ili9341" ],
             "file": "/home/mickey/Repos/chip-8-esp32/build/esp-idf/main/libmain.a",
-            "sources": [ "/home/mickey/Repos/chip-8-esp32/main/main.c", "/home/mickey/Repos/chip-8-esp32/main/lcd/lcd.c", "/home/mickey/Repos/chip-8-esp32/main/utils/utils.c", "/home/mickey/Repos/chip-8-esp32/main/gfx/app.c", "/home/mickey/Repos/chip-8-esp32/main/gfx/fonts.c", "/home/mickey/Repos/chip-8-esp32/main/gfx/gfx.c", "/home/mickey/Repos/chip-8-esp32/main/gfx/screen.c" ],
-            "include_dirs": [ ".", "lcd", "utils", "gfx" ]
+            "sources": [ "/home/mickey/Repos/chip-8-esp32/main/main.c", "/home/mickey/Repos/chip-8-esp32/main/lcd/lcd.c", "/home/mickey/Repos/chip-8-esp32/main/utils/utils.c", "/home/mickey/Repos/chip-8-esp32/main/gfx/app.c", "/home/mickey/Repos/chip-8-esp32/main/gfx/fonts.c", "/home/mickey/Repos/chip-8-esp32/main/gfx/gfx.c", "/home/mickey/Repos/chip-8-esp32/main/gfx/screen.c", "/home/mickey/Repos/chip-8-esp32/main/keypad/keypad.c" ],
+            "include_dirs": [ ".", "lcd", "utils", "gfx", "keypad" ]
         },
         "mbedtls": {
             "alias": "idf::mbedtls",
@@ -2860,7 +2860,7 @@
             "priv_reqs": [ "spi_flash", "espressif__esp_lcd_ili9341" ],
             "managed_reqs": [],
             "managed_priv_reqs": [ "espressif__esp_lcd_ili9341" ],
-            "include_dirs": [ ".", "lcd", "utils", "gfx" ]
+            "include_dirs": [ ".", "lcd", "utils", "gfx", "keypad" ]
         },
         "espressif__esp_lcd_ili9341": {
             "alias": "idf::espressif__esp_lcd_ili9341",
