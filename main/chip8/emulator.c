@@ -11,15 +11,18 @@ static uint16_t hardware_timer_long_counter = 0;
  * Rendering + DT & ST will wait for long counter to hit 75 to achieve 60hz.
  * @param htim
  */
-void CHIP8_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
+bool chip8_timer_callback(gptimer_handle_t timer, const gptimer_alarm_event_data_t *edata, void *user_ctx)
 {
-	if (instance == NULL) return;
+	if (instance == NULL) return false;
 
 	read_input(instance->emu_state->emu_key_states, instance->emu_state->chip8_key_states);
 	emu_handle_input(instance);
 	hardware_timer_short_counter++;
 	hardware_timer_long_counter++;
 
+    gptimer_set_raw_count(timer, 0);
+
+    return true;
 }
 
 void emu_handle_input(Chip8_t *chip8)
@@ -89,6 +92,22 @@ void emu_handle_input(Chip8_t *chip8)
 
 bool run(Chip8_t *chip8)
 {
+    static const gptimer_config_t chip8_timer_config =
+    {
+        .clk_src = GPTIMER_CLK_SRC_APB,
+        .direction = GPTIMER_COUNT_UP,
+        .resolution_hz = 1000000,
+    };
+
+    static const gptimer_alarm_config_t chip8_timer_alarm =
+    {
+        .flags.auto_reload_on_alarm = 1,
+        .alarm_count = 222,
+        .reload_count = 0,
+    };
+
+    static const gptimer_event_callbacks_t callback = { .on_alarm = chip8_timer_callback };
+
 	chip8->emu_state->flags = EMU_FLAG_NONE;
     chip8->emu_state->speed_modifier = 1.0f;
     chip8->emu_state->ideal_step_delay_us = EMU_DEFAULT_STEP_DELAY_US;
