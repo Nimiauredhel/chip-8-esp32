@@ -1,0 +1,59 @@
+[0;33m--- esp-idf-monitor 1.6.0 on /dev/ttyUSB0 115200[0m
+[0;33m--- Quit: Ctrl+] | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x40082a7b: lock_acquire_generic at /home/mickey/esp/esp-idf/components/newlib/locks.c:133
+[0m
+[0;33m--- 0x40081a45: panic_abort at /home/mickey/esp/esp-idf/components/esp_system/panic.c:454
+--- 0x40086ee1: esp_system_abort at /home/mickey/esp/esp-idf/components/esp_system/port/esp_system_chip.c:87
+--- 0x4008d861: abort at /home/mickey/esp/esp-idf/components/newlib/abort.c:38
+--- 0x40082a7b: lock_acquire_generic at /home/mickey/esp/esp-idf/components/newlib/locks.c:133
+--- 0x40082bb9: _lock_acquire_recursive at /home/mickey/esp/esp-idf/components/newlib/locks.c:162
+--- 0x40082c32: __retarget_lock_acquire_recursive at /home/mickey/esp/esp-idf/components/newlib/locks.c:321
+--- 0x400e4f5b: _vfprintf_r at /builds/idf/crosstool-NG/.build/xtensa-esp-elf/src/newlib/newlib/libc/stdio/vfprintf.c:846 (discriminator 2)
+--- 0x400e1525: vprintf at /builds/idf/crosstool-NG/.build/xtensa-esp-elf/src/newlib/newlib/libc/stdio/vprintf.c:34
+--- 0x400eff6d: esp_log_writev at /home/mickey/esp/esp-idf/components/log/src/os/log_write.c:34
+--- 0x4008d7d1: esp_log_write at /home/mickey/esp/esp-idf/components/log/src/os/log_write.c:44
+--- 0x400db831: gpio_config at /home/mickey/esp/esp-idf/components/esp_driver_gpio/src/gpio.c:404 (discriminator 1)
+--- 0x400d9bca: keypad_initialize at /home/mickey/Repos/chip-8-esp32/main/keypad/keypad.c:50
+--- 0x400d9be3: keypad_get_state at /home/mickey/Repos/chip-8-esp32/main/keypad/keypad.c:61
+--- 0x400d9113: read_input at /home/mickey/Repos/chip-8-esp32/main/chip8/input.c:19
+--- 0x400d8518: chip8_timer_callback at /home/mickey/Repos/chip-8-esp32/main/chip8/emulator.c:18
+--- 0x40085a1c: gptimer_default_isr at /home/mickey/esp/esp-idf/components/esp_driver_gptimer/src/gptimer.c:448
+--- 0x40083139: _xt_lowint1 at /home/mickey/esp/esp-idf/components/xtensa/xtensa_vectors.S:1240
+--- 0x400d8ea5: run at /home/mickey/Repos/chip-8-esp32/main/chip8/emulator.c:137
+--- 0x400d81e6: chip8start at /home/mickey/Repos/chip-8-esp32/main/chip8/chip8main.c:12
+--- 0x400d7178: app_main at /home/mickey/Repos/chip-8-esp32/main/main.c:56
+--- 0x400ef76c: main_task at /home/mickey/esp/esp-idf/components/freertos/app_startup.c:208
+--- 0x400878c9: vPortTaskWrapper at /home/mickey/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x40082a7b: lock_acquire_generic at /home/mickey/esp/esp-idf/components/newlib/locks.c:133
+[0m
+[0;33m--- 0x40081a45: panic_abort at /home/mickey/esp/esp-idf/components/esp_system/panic.c:454
+--- 0x40086ee1: esp_system_abort at /home/mickey/esp/esp-idf/components/esp_system/port/esp_system_chip.c:87
+--- 0x4008d861: abort at /home/mickey/esp/esp-idf/components/newlib/abort.c:38
+--- 0x40082a7b: lock_acquire_generic at /home/mickey/esp/esp-idf/components/newlib/locks.c:133
+--- 0x40082bb9: _lock_acquire_recursive at /home/mickey/esp/esp-idf/components/newlib/locks.c:162
+--- 0x40082c32: __retarget_lock_acquire_recursive at /home/mickey/esp/esp-idf/components/newlib/locks.c:321
+--- 0x400e4f5b: _vfprintf_r at /builds/idf/crosstool-NG/.build/xtensa-esp-elf/src/newlib/newlib/libc/stdio/vfprintf.c:846 (discriminator 2)
+--- 0x400e1525: vprintf at /builds/idf/crosstool-NG/.build/xtensa-esp-elf/src/newlib/newlib/libc/stdio/vprintf.c:34
+--- 0x400eff6d: esp_log_writev at /home/mickey/esp/esp-idf/components/log/src/os/log_write.c:34
+--- 0x4008d7d1: esp_log_write at /home/mickey/esp/esp-idf/components/log/src/os/log_write.c:44
+--- 0x400db831: gpio_config at /home/mickey/esp/esp-idf/components/esp_driver_gpio/src/gpio.c:404 (discriminator 1)
+--- 0x400d9bca: keypad_initialize at /home/mickey/Repos/chip-8-esp32/main/keypad/keypad.c:50
+--- 0x400d9be3: keypad_get_state at /home/mickey/Repos/chip-8-esp32/main/keypad/keypad.c:61
+--- 0x400d9113: read_input at /home/mickey/Repos/chip-8-esp32/main/chip8/input.c:19
+--- 0x400d8518: chip8_timer_callback at /home/mickey/Repos/chip-8-esp32/main/chip8/emulator.c:18
+--- 0x40085a1c: gptimer_default_isr at /home/mickey/esp/esp-idf/components/esp_driver_gptimer/src/gptimer.c:448
+--- 0x40083139: _xt_lowint1 at /home/mickey/esp/esp-idf/components/xtensa/xtensa_vectors.S:1240
+--- 0x400d8ea8: run at /home/mickey/Repos/chip-8-esp32/main/chip8/emulator.c:139 (discriminator 1)
+--- 0x400d81e6: chip8start at /home/mickey/Repos/chip-8-esp32/main/chip8/chip8main.c:12
+--- 0x400d7178: app_main at /home/mickey/Repos/chip-8-esp32/main/main.c:56
+--- 0x400ef76c: main_task at /home/mickey/esp/esp-idf/components/freertos/app_startup.c:208
+--- 0x400878c9: vPortTaskWrapper at /home/mickey/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0m

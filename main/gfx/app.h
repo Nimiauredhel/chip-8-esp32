@@ -12,6 +12,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include "gfx.h"
+#include "audio.h"
 #include "utils.h"
 #include "pitches.h"
 

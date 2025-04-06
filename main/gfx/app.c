@@ -147,7 +147,7 @@ void app_loop(void)
 {
 	uint16_t pitch = A1;
 
-	//HAL_TIM_PWM_Stop(&htim9, TIM_CHANNEL_1);
+    set_audio(0, 0);
 
 	app_window->state = GFXWIN_WRITING;
 	gfx_fill_screen(color_black);
@@ -199,9 +199,7 @@ void app_loop(void)
 
     vTaskDelay(pdMS_TO_TICKS(half_step_delay));
 
-	/*HAL_TIM_PWM_Start(&htim9, TIM_CHANNEL_1);
-	htim9.Instance->ARR = pitch = A1;
-	htim9.Instance->CCR1 = pitch / 2;*/
+    set_audio(A1, 50);
 
 	app_window->state = GFXWIN_WRITING;
 	gfx_fill_screen(color_white);
@@ -211,8 +209,7 @@ void app_loop(void)
 
     vTaskDelay(pdMS_TO_TICKS(half_step_delay));
 
-	/*htim9.Instance->ARR = pitch = B1;
-	htim9.Instance->CCR1 = pitch/2;*/
+    set_audio(B1, 50);
 	app_window->state = GFXWIN_WRITING;
 	gfx_fill_screen(color_red);
 	app_window->state = GFXWIN_DIRTY;
@@ -221,8 +218,7 @@ void app_loop(void)
 
     vTaskDelay(pdMS_TO_TICKS(half_step_delay));
 
-	/*htim9.Instance->ARR = pitch = Db2;
-	htim9.Instance->CCR1 = pitch/2;*/
+    set_audio(Db2, 50);
 	app_window->state = GFXWIN_WRITING;
 	gfx_fill_screen(color_green);
 	app_window->state = GFXWIN_DIRTY;
@@ -231,8 +227,7 @@ void app_loop(void)
 
     vTaskDelay(pdMS_TO_TICKS(half_step_delay));
 
-	/*htim9.Instance->ARR = pitch = D2;
-	htim9.Instance->CCR1 = pitch/2;*/
+    set_audio(D2, 50);
 	app_window->state = GFXWIN_WRITING;
 	gfx_fill_screen(color_blue);
 	app_window->state = GFXWIN_DIRTY;
@@ -241,8 +236,7 @@ void app_loop(void)
 
     vTaskDelay(pdMS_TO_TICKS(half_step_delay));
 
-	/*htim9.Instance->ARR = pitch = E2;
-	htim9.Instance->CCR1 = pitch/2;*/
+    set_audio(E2, 50);
 	app_window->state = GFXWIN_WRITING;
 	gfx_fill_screen(color_cyan);
 	app_window->state = GFXWIN_DIRTY;
@@ -251,8 +245,7 @@ void app_loop(void)
 
     vTaskDelay(pdMS_TO_TICKS(half_step_delay));
 
-	/*htim9.Instance->ARR = pitch = Gb2;
-	htim9.Instance->CCR1 = pitch/2;*/
+    set_audio(Gb2, 50);
 	app_window->state = GFXWIN_WRITING;
 	gfx_fill_screen(color_yellow);
 	app_window->state = GFXWIN_DIRTY;
@@ -261,8 +254,7 @@ void app_loop(void)
 
     vTaskDelay(pdMS_TO_TICKS(half_step_delay));
 
-	/*htim9.Instance->ARR = pitch = Ab2;
-	htim9.Instance->CCR1 = pitch/2;*/
+    set_audio(Ab2, 50);
 	app_window->state = GFXWIN_WRITING;
 	gfx_fill_screen(color_magenta);
 	app_window->state = GFXWIN_DIRTY;
@@ -271,8 +263,7 @@ void app_loop(void)
 
     vTaskDelay(pdMS_TO_TICKS(half_step_delay));
 
-	/*htim9.Instance->ARR = pitch = A2;
-	htim9.Instance->CCR1 = pitch/2;*/
+    set_audio(A2, 50);
 	app_window->state = GFXWIN_WRITING;
 	gfx_fill_screen(color_black);
 	app_window->state = GFXWIN_DIRTY;
@@ -281,7 +272,7 @@ void app_loop(void)
 
     vTaskDelay(pdMS_TO_TICKS(step_delay));
 
-	//HAL_TIM_PWM_Stop(&htim9, TIM_CHANNEL_1);
+    set_audio(0, 0);
 /*
 	gfx_rgb_to_565_nonalloc(color, 75, 25, 0);
 	gfx_fill_rect_single_color(0, 0, 80, 60, color);
@@ -373,20 +364,15 @@ void app_loop(void)
 		gfx_fill_rect_loop(color_loop, color_loop_length, 160 - (160 * scale), 120 - (120 * scale), 320 * scale, 240 * scale);
 		app_window->state = GFXWIN_DIRTY;
 
-		/*HAL_TIM_PWM_Start(&htim9, TIM_CHANNEL_1);
-		htim9.Instance->ARR = pitch = D2 * scale;
-		htim9.Instance->CCR1 = pitch/2;
-		HAL_Delay(step_delay);
-		htim9.Instance->ARR = pitch = A1 * scale;
-		htim9.Instance->CCR1 = pitch/2;
-		HAL_Delay(step_delay);
-		htim9.Instance->ARR = pitch = Gb1 * scale;
-		htim9.Instance->CCR1 = pitch/2;
-		HAL_Delay(step_delay);
-		htim9.Instance->ARR = pitch = D1 * scale;
-		htim9.Instance->CCR1 = pitch/2;
-		HAL_Delay(step_delay);
-		HAL_TIM_PWM_Stop(&htim9, TIM_CHANNEL_1);*/
+        set_audio(D2 / scale, 50);
+        vTaskDelay(pdMS_TO_TICKS(step_delay));
+        set_audio(A1 / scale, 50);
+        vTaskDelay(pdMS_TO_TICKS(step_delay));
+        set_audio(Gb1 / scale, 50);
+        vTaskDelay(pdMS_TO_TICKS(step_delay));
+        set_audio(D1 / scale, 50);
+        vTaskDelay(pdMS_TO_TICKS(step_delay));
+        set_audio(0, 0);
 
 		while (app_window->state != GFXWIN_CLEAN)
             vTaskDelay(pdMS_TO_TICKS(half_step_delay));
@@ -413,9 +399,7 @@ void app_loop(void)
 	gfx_draw_binary_sprite(alien_sprite, 32, 130, alien_color, 10);
 
 	app_window->state = GFXWIN_DIRTY;
-	/*htim9.Instance->ARR = pitch = C2;
-	htim9.Instance->CCR1 = pitch/2;
-	HAL_TIM_PWM_Start(&htim9, TIM_CHANNEL_1);*/
+    set_audio(C2, 50);
 	while (app_window->state != GFXWIN_CLEAN)
         vTaskDelay(pdMS_TO_TICKS(step_delay));
 
@@ -460,20 +444,17 @@ void app_loop(void)
 		gfx_fill_rect_loop(color_loop, color_loop_length, 0, 120, 320, 120);
 		gfx_draw_binary_sprite(alien_sprite, alien_x, 130, alien_color, 8);
 		app_window->state = GFXWIN_DIRTY;
-		/*htim9.Instance->ARR = pitch = (Gb1 * (1 + alien_x / 320));
-		htim9.Instance->CCR1 = pitch/2;
-		HAL_TIM_PWM_Start(&htim9, TIM_CHANNEL_1);
-		HAL_Delay(half_step_delay);
-		HAL_TIM_PWM_Stop(&htim9, TIM_CHANNEL_1);*/
+        set_audio(Gb1 * (1 + alien_x / 320.0f), 50);
+        vTaskDelay(pdMS_TO_TICKS(half_step_delay));
+        set_audio(0, 0);
 		alien_x += 32;
 		while (app_window->state != GFXWIN_CLEAN)
             vTaskDelay(pdMS_TO_TICKS(half_step_delay));
         vTaskDelay(pdMS_TO_TICKS(step_delay));
 	}
 
-/*	HAL_Delay(step_delay);
-	HAL_TIM_PWM_Stop(&htim9, TIM_CHANNEL_1);*/
     vTaskDelay(pdMS_TO_TICKS(step_delay));
+    set_audio(0, 0);
     vTaskDelay(pdMS_TO_TICKS(step_delay));
     vTaskDelay(pdMS_TO_TICKS(step_delay));
 }

@@ -26,7 +26,7 @@ Chip8_t *create_instance(uint16_t *rom)
     Chip8_t *chip8 = malloc(sizeof(Chip8_t));
     explicit_bzero(chip8, sizeof(Chip8_t));
 
-    printf("Storing %u bytes of interpreter data in the lower 512 bytes of CHIP-8 memory.\n",
+    printf("Storing %lu bytes of interpreter data in the lower 512 bytes of CHIP-8 memory.\n",
             (uint32_t)(sizeof(Chip8Instruction_t) + sizeof(Chip8Registers_t) + sizeof(EmulatorState_t) + 80));
     vTaskDelay(pdMS_TO_TICKS(100));
 
@@ -60,7 +60,7 @@ void load_default_sprites(Chip8_t *chip8)
 }
 
 
-size_t load_rom(uint16_t *rom, uint8_t *dest_ptr)
+void load_rom(uint16_t *rom, uint8_t *dest_ptr)
 {
 	// TODO: implement size check
 	// 3328 bytes is simply the accepted maximum size

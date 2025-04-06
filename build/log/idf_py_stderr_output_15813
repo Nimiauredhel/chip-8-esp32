@@ -1,0 +1,92 @@
+[0;33m--- esp-idf-monitor 1.6.0 on /dev/ttyUSB0 115200[0m
+[0;33m--- Quit: Ctrl+] | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4000d099: __udivdi3 in ROM
+[0m
+[0;33m--- 0x4000c349: memcpy in ROM
+--- 0x4000c36b: memcpy in ROM
+[0m
+[0;33m--- 0x4000d096: __udivdi3 in ROM
+--- 0x400df955: ledc_calculate_divisor at /home/mickey/esp/esp-idf/components/esp_driver_ledc/src/ledc.c:479
+---  (inlined by) ledc_set_timer_div at /home/mickey/esp/esp-idf/components/esp_driver_ledc/src/ledc.c:643
+--- 0x400e04e1: ledc_set_freq at /home/mickey/esp/esp-idf/components/esp_driver_ledc/src/ledc.c:1104
+--- 0x400d814a: set_audio at /home/mickey/Repos/chip-8-esp32/main/audio/audio.c:28
+--- 0x400d72d8: app_loop at /home/mickey/Repos/chip-8-esp32/main/gfx/app.c:150
+--- 0x400d716e: app_main at /home/mickey/Repos/chip-8-esp32/main/main.c:53
+--- 0x400ef730: main_task at /home/mickey/esp/esp-idf/components/freertos/app_startup.c:208
+--- 0x400878c9: vPortTaskWrapper at /home/mickey/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4000d099: __udivdi3 in ROM
+[0m
+[0;33m--- 0x4000c349: memcpy in ROM
+--- 0x4000c36b: memcpy in ROM
+[0m
+[0;33m--- 0x4000d096: __udivdi3 in ROM
+--- 0x400df955: ledc_calculate_divisor at /home/mickey/esp/esp-idf/components/esp_driver_ledc/src/ledc.c:479
+---  (inlined by) ledc_set_timer_div at /home/mickey/esp/esp-idf/components/esp_driver_ledc/src/ledc.c:643
+--- 0x400e04e1: ledc_set_freq at /home/mickey/esp/esp-idf/components/esp_driver_ledc/src/ledc.c:1104
+--- 0x400d814a: set_audio at /home/mickey/Repos/chip-8-esp32/main/audio/audio.c:28
+--- 0x400d72d8: app_loop at /home/mickey/Repos/chip-8-esp32/main/gfx/app.c:150
+--- 0x400d716e: app_main at /home/mickey/Repos/chip-8-esp32/main/main.c:53
+--- 0x400ef730: main_task at /home/mickey/esp/esp-idf/components/freertos/app_startup.c:208
+--- 0x400878c9: vPortTaskWrapper at /home/mickey/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4000d099: __udivdi3 in ROM
+[0m
+[0;33m--- 0x4000c349: memcpy in ROM
+--- 0x4000c36b: memcpy in ROM
+[0m
+[0;33m--- 0x4000d096: __udivdi3 in ROM
+--- 0x400df955: ledc_calculate_divisor at /home/mickey/esp/esp-idf/components/esp_driver_ledc/src/ledc.c:479
+---  (inlined by) ledc_set_timer_div at /home/mickey/esp/esp-idf/components/esp_driver_ledc/src/ledc.c:643
+--- 0x400e04e1: ledc_set_freq at /home/mickey/esp/esp-idf/components/esp_driver_ledc/src/ledc.c:1104
+--- 0x400d814a: set_audio at /home/mickey/Repos/chip-8-esp32/main/audio/audio.c:28
+--- 0x400d72d8: app_loop at /home/mickey/Repos/chip-8-esp32/main/gfx/app.c:150
+--- 0x400d716e: app_main at /home/mickey/Repos/chip-8-esp32/main/main.c:53
+--- 0x400ef730: main_task at /home/mickey/esp/esp-idf/components/freertos/app_startup.c:208
+--- 0x400878c9: vPortTaskWrapper at /home/mickey/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4000d099: __udivdi3 in ROM
+[0m
+[0;33m--- 0x4000c349: memcpy in ROM
+--- 0x4000c36b: memcpy in ROM
+[0m
+[0;33m--- 0x4000d096: __udivdi3 in ROM
+--- 0x400df955: ledc_calculate_divisor at /home/mickey/esp/esp-idf/components/esp_driver_ledc/src/ledc.c:479
+---  (inlined by) ledc_set_timer_div at /home/mickey/esp/esp-idf/components/esp_driver_ledc/src/ledc.c:643
+--- 0x400e04e1: ledc_set_freq at /home/mickey/esp/esp-idf/components/esp_driver_ledc/src/ledc.c:1104
+--- 0x400d814a: set_audio at /home/mickey/Repos/chip-8-esp32/main/audio/audio.c:28
+--- 0x400d72d8: app_loop at /home/mickey/Repos/chip-8-esp32/main/gfx/app.c:150
+--- 0x400d716e: app_main at /home/mickey/Repos/chip-8-esp32/main/main.c:53
+--- 0x400ef730: main_task at /home/mickey/esp/esp-idf/components/freertos/app_startup.c:208
+--- 0x400878c9: vPortTaskWrapper at /home/mickey/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4000d099: __udivdi3 in ROM
+[0m
+[0;33m--- 0x4000c349: memcpy in ROM
+--- 0x4000c36b: memcpy in ROM
+[0m
+[0;33m--- 0x4000d096: __udivdi3 in ROM
+--- 0x400df955: ledc_calculate_divisor at /home/mickey/esp/esp-idf/components/esp_driver_ledc/src/ledc.c:479
+---  (inlined by) ledc_set_timer_div at /home/mickey/esp/esp-idf/components/esp_driver_ledc/src/ledc.c:643
+--- 0x400e04e1: ledc_set_freq at /home/mickey/esp/esp-idf/components/esp_driver_ledc/src/ledc.c:1104
+--- 0x400d814a: set_audio at /home/mickey/Repos/chip-8-esp32/main/audio/audio.c:28
+--- 0x400d72d8: app_loop at /home/mickey/Repos/chip-8-esp32/main/gfx/app.c:150
+--- 0x400d716e: app_main at /home/mickey/Repos/chip-8-esp32/main/main.c:53
+--- 0x400ef730: main_task at /home/mickey/esp/esp-idf/components/freertos/app_startup.c:208
+--- 0x400878c9: vPortTaskWrapper at /home/mickey/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x4000d099: __udivdi3 in ROM
+[0m
+[0m

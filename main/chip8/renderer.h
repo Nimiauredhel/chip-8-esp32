@@ -6,6 +6,7 @@
 #include "chip8_defs.h"
 #include "input.h"
 #include "gfx.h"
+#include "disassembler.h"
 
 #define COLOR_PAIR_DISPLAY_ON 1
 #define COLOR_PAIR_DISPLAY_OFF 2

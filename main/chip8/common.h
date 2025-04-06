@@ -21,7 +21,7 @@
  * Global flag set by OS termination signals
  * and polled by functions to allow graceful termination.
  */
-extern bool should_terminate;
+extern volatile bool should_terminate;
 
 int random_range(int min, int max);
 float seconds_since_clock(struct timespec *start_clock);

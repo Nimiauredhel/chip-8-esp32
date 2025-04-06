@@ -1,0 +1,73 @@
+[0;33m--- esp-idf-monitor 1.6.0 on /dev/ttyUSB0 115200[0m
+[0;33m--- Quit: Ctrl+] | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400dceba: task_wdt_timeout_handling at /home/mickey/esp/esp-idf/components/esp_system/task_wdt/task_wdt.c:434
+--- 0x400dd27c: task_wdt_isr at /home/mickey/esp/esp-idf/components/esp_system/task_wdt/task_wdt.c:507
+--- 0x40083139: _xt_lowint1 at /home/mickey/esp/esp-idf/components/xtensa/xtensa_vectors.S:1240
+--- 0x400d7e57: gfx_fill_screen at /home/mickey/Repos/chip-8-esp32/main/gfx/gfx.c:253 (discriminator 1)
+--- 0x400d9500: render_display at /home/mickey/Repos/chip-8-esp32/main/chip8/renderer.c:54
+--- 0x400d90d3: run at /home/mickey/Repos/chip-8-esp32/main/chip8/emulator.c:232
+--- 0x400d822a: chip8start at /home/mickey/Repos/chip-8-esp32/main/chip8/chip8main.c:12
+--- 0x400d7198: app_main at /home/mickey/Repos/chip-8-esp32/main/main.c:56
+--- 0x400ef80c: main_task at /home/mickey/esp/esp-idf/components/freertos/app_startup.c:208
+--- 0x400878c9: vPortTaskWrapper at /home/mickey/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x400dceba: task_wdt_timeout_handling at /home/mickey/esp/esp-idf/components/esp_system/task_wdt/task_wdt.c:434
+--- 0x400dd27c: task_wdt_isr at /home/mickey/esp/esp-idf/components/esp_system/task_wdt/task_wdt.c:507
+--- 0x40083139: _xt_lowint1 at /home/mickey/esp/esp-idf/components/xtensa/xtensa_vectors.S:1240
+--- 0x400d8ed9: run at /home/mickey/Repos/chip-8-esp32/main/chip8/emulator.c:135
+--- 0x400d822a: chip8start at /home/mickey/Repos/chip-8-esp32/main/chip8/chip8main.c:12
+--- 0x400d7198: app_main at /home/mickey/Repos/chip-8-esp32/main/main.c:56
+--- 0x400ef80c: main_task at /home/mickey/esp/esp-idf/components/freertos/app_startup.c:208
+--- 0x400878c9: vPortTaskWrapper at /home/mickey/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x4008810d: vListInsert at /home/mickey/esp/esp-idf/components/freertos/FreeRTOS-Kernel/list.c:183 (discriminator 3)
+[0m
+[0;33m--- 0x4000c2e0: memcpy in ROM
+--- 0x4000c2f6: memcpy in ROM
+[0m
+[0;33m--- 0x400d2b23: uart_hal_write_txfifo at /home/mickey/esp/esp-idf/components/hal/uart_hal_iram.c:27
+--- 0x4008810d: vListInsert at /home/mickey/esp/esp-idf/components/freertos/FreeRTOS-Kernel/list.c:183 (discriminator 3)
+[0m
+[0;33m--- 0x4008810a: vListInsert at /home/mickey/esp/esp-idf/components/freertos/FreeRTOS-Kernel/list.c:183
+--- 0x40088d75: vTaskPlaceOnEventList at /home/mickey/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3769 (discriminator 1)
+--- 0x4008777c: xQueueSemaphoreTake at /home/mickey/esp/esp-idf/components/freertos/FreeRTOS-Kernel/queue.c:1829
+--- 0x40084907: dev_wait at /home/mickey/esp/esp-idf/components/esp_hw_support/spi_bus_lock.c:575
+---  (inlined by) spi_bus_lock_acquire_start at /home/mickey/esp/esp-idf/components/esp_hw_support/spi_bus_lock.c:733
+--- 0x4008540f: spi_device_acquire_bus at /home/mickey/esp/esp-idf/components/esp_driver_spi/src/gpspi/spi_master.c:1299
+--- 0x400da749: panel_io_spi_tx_param at /home/mickey/esp/esp-idf/components/esp_lcd/spi/esp_lcd_panel_io_spi.c:213
+--- 0x400da212: esp_lcd_panel_io_tx_param at /home/mickey/esp/esp-idf/components/esp_lcd/src/esp_lcd_panel_io.c:23
+--- 0x400d9f43: panel_ili9341_draw_bitmap at /home/mickey/Repos/chip-8-esp32/managed_components/espressif__esp_lcd_ili9341/esp_lcd_ili9341.c:260
+--- 0x400da379: esp_lcd_panel_draw_bitmap at /home/mickey/esp/esp-idf/components/esp_lcd/src/esp_lcd_panel_ops.c:37
+--- 0x400d80fb: screen_fill_rect_loop at /home/mickey/Repos/chip-8-esp32/main/gfx/screen.c:43
+--- 0x400d7d3b: gfx_push_to_screen at /home/mickey/Repos/chip-8-esp32/main/gfx/gfx.c:189
+--- 0x400d7d57: gfx_refresh_timer_callback at /home/mickey/Repos/chip-8-esp32/main/gfx/gfx.c:52
+--- 0x40085a1c: gptimer_default_isr at /home/mickey/esp/esp-idf/components/esp_driver_gptimer/src/gptimer.c:448
+--- 0x40083139: _xt_lowint1 at /home/mickey/esp/esp-idf/components/xtensa/xtensa_vectors.S:1240
+--- 0x400dd27c: task_wdt_isr at /home/mickey/esp/esp-idf/components/esp_system/task_wdt/task_wdt.c:507
+--- 0x400d822a: chip8start at /home/mickey/Repos/chip-8-esp32/main/chip8/chip8main.c:12
+--- 0x400d7198: app_main at /home/mickey/Repos/chip-8-esp32/main/main.c:56
+--- 0x400ef80c: main_task at /home/mickey/esp/esp-idf/components/freertos/app_startup.c:208
+--- 0x400878c9: vPortTaskWrapper at /home/mickey/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x40085b23: xt_utils_compare_and_set at /home/mickey/esp/esp-idf/components/xtensa/include/xt_utils.h:216
+---  (inlined by) esp_cpu_compare_and_set at /home/mickey/esp/esp-idf/components/esp_hw_support/cpu.c:232
+[0m
+[0;33m--- 0x40085b20: esp_cpu_compare_and_set at /home/mickey/esp/esp-idf/components/esp_hw_support/cpu.c:200
+--- 0x40087b05: spinlock_acquire at /home/mickey/esp/esp-idf/components/esp_hw_support/include/spinlock.h:132
+---  (inlined by) xPortEnterCriticalTimeout at /home/mickey/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:479
+--- 0x40089d45: vPortEnterCritical at /home/mickey/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/include/freertos/portmacro.h:567
+---  (inlined by) xTaskIncrementTickOtherCores at /home/mickey/esp/esp-idf/components/freertos/esp_additions/freertos_tasks_c_additions.h:101
+--- 0x40088059: xPortSysTickHandler at /home/mickey/esp/esp-idf/components/freertos/port_systick.c:226
+--- 0x40087d89: _frxt_timer_int at /home/mickey/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/portasm.S:344
+--- 0x40083142: _xt_lowint1 at /home/mickey/esp/esp-idf/components/xtensa/xtensa_vectors.S:1240
+--- 0x40085c1b: xt_utils_wait_for_intr at /home/mickey/esp/esp-idf/components/xtensa/include/xt_utils.h:82
+---  (inlined by) esp_cpu_wait_for_intr at /home/mickey/esp/esp-idf/components/esp_hw_support/cpu.c:55
+--- 0x400d29b7: esp_vApplicationIdleHook at /home/mickey/esp/esp-idf/components/esp_system/freertos_hooks.c:58
+--- 0x400886b6: prvIdleTask at /home/mickey/esp/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:4353 (discriminator 1)
+--- 0x400878c9: vPortTaskWrapper at /home/mickey/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0m

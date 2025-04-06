@@ -1,9 +1,9 @@
 #include "emulator.h"
 
 static Chip8_t *instance = NULL;
-static uint16_t render_queue = 0;
-static uint16_t hardware_timer_short_counter = 0;
-static uint16_t hardware_timer_long_counter = 0;
+static volatile uint16_t render_queue = 0;
+static volatile uint16_t hardware_timer_short_counter = 0;
+static volatile uint16_t hardware_timer_long_counter = 0;
 
 /**
  * Set timer to 4,500Hz.
@@ -15,8 +15,6 @@ bool chip8_timer_callback(gptimer_handle_t timer, const gptimer_alarm_event_data
 {
 	if (instance == NULL) return false;
 
-	read_input(instance->emu_state->emu_key_states, instance->emu_state->chip8_key_states);
-	emu_handle_input(instance);
 	hardware_timer_short_counter++;
 	hardware_timer_long_counter++;
 
@@ -108,6 +106,16 @@ bool run(Chip8_t *chip8)
 
     static const gptimer_event_callbacks_t callback = { .on_alarm = chip8_timer_callback };
 
+    gptimer_handle_t chip8_timer_handle;
+
+    // setup and start TIMER whose callback is set to decrement our counters
+    ESP_ERROR_CHECK(gptimer_new_timer(&chip8_timer_config, &chip8_timer_handle));
+    ESP_ERROR_CHECK(gptimer_register_event_callbacks(chip8_timer_handle, &callback, NULL));
+    ESP_ERROR_CHECK(gptimer_set_alarm_action(chip8_timer_handle, &chip8_timer_alarm));
+    ESP_ERROR_CHECK(gptimer_enable(chip8_timer_handle));
+    ESP_ERROR_CHECK(gptimer_set_raw_count(chip8_timer_handle, 0));
+    ESP_ERROR_CHECK(gptimer_start(chip8_timer_handle));
+
 	chip8->emu_state->flags = EMU_FLAG_NONE;
     chip8->emu_state->speed_modifier = 1.0f;
     chip8->emu_state->ideal_step_delay_us = EMU_DEFAULT_STEP_DELAY_US;
@@ -118,20 +126,11 @@ bool run(Chip8_t *chip8)
     explicit_bzero(chip8->emu_state->emu_key_states, EMU_KEY_COUNT);
 
     init_display(&chip8->layout);
-    //chip8->audio_stream = init_audio();
     render_display(chip8, chip8->layout.window_chip8);
 
     //usleep(chip8->emu_state->ideal_step_delay_us);
     instance = chip8;
-    HAL_Delay(1);
-
-    // start TIMER 3 whose callback is set to decrement our counters
-	HAL_TIM_RegisterCallback(&htim3, HAL_TIM_PERIOD_ELAPSED_CB_ID, CHIP8_TIM_PeriodElapsedCallback);
-	HAL_TIM_Base_Start_IT(&htim3);
-
-	HAL_TIM_PWM_Stop(&htim9, TIM_CHANNEL_1);
-	htim9.Instance->ARR = A4;
-	htim9.Instance->CCR1 = A4/2;
+    vTaskDelay(pdMS_TO_TICKS(1));
 
     while (chip8->registers->PC < 0xFFF && !should_terminate && !(chip8->emu_state->flags & EMU_FLAG_RESET))
     {
@@ -142,6 +141,9 @@ bool run(Chip8_t *chip8)
     	hardware_timer_short_counter = 0;
         // getting the start clock of the cycle to approximate our ideal frequency
         //clock_gettime(CLOCK_MONOTONIC, (struct timespec *)&chip8->emu_state->start_clock);
+
+        emu_handle_input(instance);
+        read_input(instance->emu_state->emu_key_states, instance->emu_state->chip8_key_states);
 
     	if (chip8->emu_state->flags >> 5 == EMU_FLAG_SHOW_SUMMARY >> 5)
     	{
@@ -159,7 +161,7 @@ bool run(Chip8_t *chip8)
 
         if (chip8->emu_state->flags & EMU_FLAG_STEP_MODE)
         {
-            HAL_Delay(500);
+            vTaskDelay(pdMS_TO_TICKS(500));
 
             if(check_input(chip8->emu_state->emu_key_states, EMU_KEY_STEP_MODE_IDX))
             {
@@ -187,7 +189,7 @@ bool run(Chip8_t *chip8)
 
         // rendering the disassembled instruction
     	if (chip8->emu_state->flags & EMU_FLAG_SHOW_DISASS)
-        render_disassembly(chip8->instruction, chip8->layout.window_emu);
+            render_disassembly(chip8->instruction, chip8->layout.window_emu);
 
         // executing the actual instruction;
         execute_instruction(chip8, chip8->instruction, chip8->layout.window_chip8);
@@ -205,12 +207,11 @@ bool run(Chip8_t *chip8)
             // TODO: when audio is reimplemented, the audio timer should be handled here
 			if (chip8->registers->ST <= 0)
 			{
-				HAL_TIM_PWM_Stop(&htim9, TIM_CHANNEL_1);
+                set_audio(0, 0);
 			}
 			else
 			{
-				htim9.Instance->ARR = A4 / (chip8->registers->ST );
-				htim9.Instance->CCR1 = (A4 / 2) / (chip8->registers->ST);
+                set_audio(A4, 50);
 			}
 
 			if (hardware_timer_long_counter >= 75)
@@ -253,10 +254,11 @@ bool run(Chip8_t *chip8)
     }
 
     instance = NULL;
-	HAL_TIM_PWM_Stop(&htim9, TIM_CHANNEL_1);
-	HAL_TIM_Base_Stop_IT(&htim3);
+    ESP_ERROR_CHECK(gptimer_stop(chip8_timer_handle));
+    ESP_ERROR_CHECK(gptimer_disable(chip8_timer_handle));
+    ESP_ERROR_CHECK(gptimer_del_timer(chip8_timer_handle));
 	deinit_display(&chip8->layout);
-    HAL_Delay(25);
+    vTaskDelay(pdMS_TO_TICKS(25));
 
     /*
     if (chip8->registers->ST > 0)
@@ -531,10 +533,11 @@ void execute_instruction(Chip8_t *chip8, Chip8Instruction_t *instruction, WINDOW
             if (chip8->registers->ST != Vx)
             {
             	chip8->registers->ST = Vx;
-				htim9.Instance->ARR = A4 / (chip8->registers->ST);
-				htim9.Instance->CCR1 = (A4 / 2) / (chip8->registers->ST);
-				HAL_TIM_PWM_Start(&htim9, TIM_CHANNEL_1);
-               // set_audio(chip8->audio_stream, (chip8->registers->ST = Vx) > 0);
+
+                if (Vx > 0)
+                {
+                    set_audio(A4, 50);
+                }
             }
             break;
         case OP_ADD_I_VX:

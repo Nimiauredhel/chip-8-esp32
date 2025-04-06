@@ -28,10 +28,11 @@ static const uint8_t keypad_values[4][4] =
 
 static const gpio_config_t row_config =
 {
-    .pull_down_en = GPIO_PULLDOWN_ENABLE,
+    .pull_down_en = GPIO_PULLDOWN_DISABLE,
     .pull_up_en = GPIO_PULLUP_DISABLE,
     .mode = GPIO_MODE_DEF_INPUT,
-    .pin_bit_mask = keypad_rows[0] | keypad_rows[1] | keypad_rows[2] | keypad_rows[3],
+    .pin_bit_mask = (1ULL<<keypad_rows[0]) | (1ULL<<keypad_rows[1]) | (1ULL<<keypad_rows[2]) | (1ULL<<keypad_rows[3]),
+    .intr_type = GPIO_INTR_DISABLE,
 
 }; 
 
@@ -40,15 +41,16 @@ static const gpio_config_t col_config =
     .pull_down_en = GPIO_PULLDOWN_DISABLE,
     .pull_up_en = GPIO_PULLUP_DISABLE,
     .mode = GPIO_MODE_DEF_OUTPUT,
-    .pin_bit_mask = keypad_columns[0] | keypad_columns[1] | keypad_columns[2] | keypad_columns[3],
+    .pin_bit_mask = (1ULL<<keypad_columns[0]) | (1ULL<<keypad_columns[1]) | (1ULL<<keypad_columns[2]) | (1ULL<<keypad_columns[3]),
+    .intr_type = GPIO_INTR_DISABLE,
 }; 
 
 static bool initialized = false;
 
 void keypad_initialize(void)
 {
-    gpio_config(&row_config);
-    gpio_config(&col_config);
+    ESP_ERROR_CHECK(gpio_config(&row_config));
+    ESP_ERROR_CHECK(gpio_config(&col_config));
 }
 
 uint16_t keypad_get_state(void)
@@ -65,12 +67,12 @@ uint16_t keypad_get_state(void)
 	// pull all back low
 	for (i = 0; i < 4; i++)
 	{
-        gpio_set_level(keypad_columns[i], 0);
+        ESP_ERROR_CHECK(gpio_set_level(keypad_columns[i], 0));
 	}
 
 	for (uint8_t c = 0; c < 4; c++)
 	{
-        gpio_set_level(keypad_columns[c], 1);
+        ESP_ERROR_CHECK(gpio_set_level(keypad_columns[c], 1));
 
 		for (uint8_t r = 0; r < 4; r++)
 		{
@@ -81,7 +83,7 @@ uint16_t keypad_get_state(void)
 			}
 		}
 
-        gpio_set_level(keypad_columns[c], 0);
+        ESP_ERROR_CHECK(gpio_set_level(keypad_columns[c], 0));
 	}
 
 	return state;

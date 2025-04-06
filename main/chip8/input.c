@@ -17,7 +17,8 @@ void read_input(uint16_t *emu_key_states, uint16_t *chip8_key_states)
 
     uint8_t idx;
     uint16_t key_state_current = keypad_get_state();
-    bool emu_input = HAL_GPIO_ReadPin(USER_Btn_GPIO_Port, USER_Btn_Pin);
+    // TODO: reenable emu keys
+    bool emu_input = false;//HAL_GPIO_ReadPin(USER_Btn_GPIO_Port, USER_Btn_Pin);
 
 	for (idx = 0; idx < EMU_KEY_COUNT; idx++)
 	{

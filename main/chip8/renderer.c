@@ -175,7 +175,7 @@ void render_emulator_state(EmulatorState_t *emu_state, WINDOW *window_emu)
     snprintf(text_buffer, 32, "Speed[%.2f]", emu_state->speed_modifier);
     gfx_print_string(text_buffer, 0, 0, text_color, 1);
 
-    snprintf(text_buffer, 32, "Step Counter[%u]", emu_state->step_counter);
+    snprintf(text_buffer, 32, "Step Counter[%lu]", emu_state->step_counter);
     gfx_print_string(text_buffer, 0, line_height_px, text_color, 1);
 
     snprintf(text_buffer, 32, "Runtime[%.2fs]", emu_state->runtime_seconds_counter);

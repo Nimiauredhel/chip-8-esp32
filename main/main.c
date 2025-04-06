@@ -13,8 +13,10 @@
 #include "esp_flash.h"
 #include "esp_system.h"
 
+#include "audio.h"
 #include "gfx.h"
 #include "app.h"
+#include "chip8main.h"
 
 void app_main(void)
 {
@@ -45,9 +47,13 @@ void app_main(void)
 
     printf("Minimum free heap size: %" PRIu32 " bytes\n", esp_get_minimum_free_heap_size());
 
+    init_audio();
+
     app_init();
     app_loop();
     app_clean();
+
+    chip8start();
 
     for (int i = 1; i >= 0; i--) {
         printf("Restarting in %d seconds...\n", i);

@@ -1,6 +1,6 @@
 #include "common.h"
 
-bool should_terminate = false;
+volatile bool should_terminate = false;
 
 /**
  * The random_range() function uses this to determine
