@@ -114,7 +114,7 @@ void app_init(void)
 	{
 		float percent = i/(float)color_loop_length;
 
-		gfx_rgb_to_565_nonalloc(color, lerp(0, 100, percent) , lerp(0, 10, percent), lerp(0, 10, percent));
+		gfx_rgb_to_565_nonalloc(color, lerp(0, 100, percent) , 0, 0);
 		color_loop[i] = color[0];
 		color_loop[i+1] = color[1];
 	}

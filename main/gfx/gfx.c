@@ -17,17 +17,6 @@ const Color565_t color_blue = { 0b00000000, 0b00011111 };
 const Color565_t color_cyan = { 0b00000111, 0b11111111 };
 const Color565_t color_magenta = { 0b11111000, 0b00011111 };
 const Color565_t color_yellow = { 0b11111111, 0b11100000 };
-// RGB565 2 byte format: [ggGbbbbB][rrrrRggg]
-/*
-const Color565_t color_black = { 0b00000000, 0b00000000 };
-const Color565_t color_white = { 0b11111111, 0b11111111 };
-const Color565_t color_red = { 0b00000000, 0b11111000 };
-const Color565_t color_green = { 0b11100000, 0b00000111 };
-const Color565_t color_blue = { 0b00011111, 0b00000000 };
-const Color565_t color_cyan = { 0b11111111, 0b00000111 };
-const Color565_t color_magenta = { 0b00011111, 0b11111000 };
-const Color565_t color_yellow = { 0b11100000, 0b11111111 };
-*/
 
 const BinarySpriteSheet_t default_font =
 {
@@ -177,30 +166,21 @@ void gfx_push_to_screen(GfxWindow_t *window)
 
 void gfx_rgb_to_565_nonalloc(Color565_t dest, uint8_t red_percent, uint8_t green_percent, uint8_t blue_percent)
 {
-    static const bool flip = true;
-
-    // RGB565 2 byte format: [ggGbbbbB][rrrrRggg]
+    // RGB565 2 byte format: [RrrrrGgg][gggBbbbb]
     // start with zeroed struct
-	dest[0] = 0x0;
-	dest[1] = 0x0;
+	dest[1] = 0x00;
+	dest[0] = 0x00;
 
     // set correctly shifted R segment in the second byte, its final location
-    dest[1] = INT_PERCENT(red_percent, R565_MAX) << 3;
+    dest[0] = INT_PERCENT(red_percent, R565_MAX) << 3;
     // temporarily set unshifted G segment in first byte
-    dest[0] = INT_PERCENT(green_percent, G565_MAX);
+    dest[1] = INT_PERCENT(green_percent, G565_MAX);
     // OR shifted upper half of G into second byte
-    dest[1] |= (dest[0] >> 3);
+    dest[0] |= (dest[1] >> 3);
     // shift first byte to only leave lower half of G
-    dest[0] <<= 5;
+    dest[1] <<= 5;
     // finally, OR entire B segment into first byte
-    dest[0] |= INT_PERCENT(blue_percent, B565_MAX);
-
-    if (flip)
-    {
-        uint8_t temp = dest[0];
-        dest[0] = dest[1];
-        dest[1] = temp;
-    }
+    dest[1] |= INT_PERCENT(blue_percent, B565_MAX);
 
     /*
     char log[64];

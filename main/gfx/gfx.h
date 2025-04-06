@@ -24,7 +24,7 @@
 #define G565_MAX 63
 #define B565_MAX 31
 
-#define INT_PERCENT(percent, max) ((max * percent * 4) / 400)
+#define INT_PERCENT(percent, max) ((max * percent) / 100)
 
 #define BYTE_TO_BINARY_PATTERN "%c%c%c%c%c%c%c%c\r\n"
 #define BYTE_TO_BINARY(byte)  \
