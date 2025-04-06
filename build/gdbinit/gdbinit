@@ -1,0 +1,2 @@
+source /home/mickey/Repos/chip-8-esp32/build/gdbinit/symbols
+source /home/mickey/Repos/chip-8-esp32/build/gdbinit/connect

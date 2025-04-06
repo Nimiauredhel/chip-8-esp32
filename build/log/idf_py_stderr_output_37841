@@ -1,0 +1,81 @@
+[0;33m--- esp-idf-monitor 1.6.0 on /dev/ttyUSB0 115200[0m
+[0;33m--- Quit: Ctrl+] | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400e6564: lcd_com_reverse_buffer_bytes at /home/mickey/esp/esp-idf/components/esp_lcd/priv_include/esp_lcd_common.h:79
+---  (inlined by) spi_lcd_prepare_param_buffer at /home/mickey/esp/esp-idf/components/esp_lcd/spi/esp_lcd_panel_io_spi.c:200
+[0m
+[0;33m--- 0x4000c2e0: memcpy in ROM
+--- 0x4000c2f6: memcpy in ROM
+[0m
+[0;33m--- 0x400e6561: lcd_com_reverse_buffer_bytes at /home/mickey/esp/esp-idf/components/esp_lcd/priv_include/esp_lcd_common.h:79
+---  (inlined by) spi_lcd_prepare_param_buffer at /home/mickey/esp/esp-idf/components/esp_lcd/spi/esp_lcd_panel_io_spi.c:200
+--- 0x400d780f: panel_io_spi_tx_param at /home/mickey/esp/esp-idf/components/esp_lcd/spi/esp_lcd_panel_io_spi.c:245
+--- 0x400d7282: esp_lcd_panel_io_tx_param at /home/mickey/esp/esp-idf/components/esp_lcd/src/esp_lcd_panel_io.c:23
+--- 0x400d704a: panel_ili9341_init at /home/mickey/Repos/chip-8-esp32/managed_components/espressif__esp_lcd_ili9341/esp_lcd_ili9341.c:241
+--- 0x400d7344: esp_lcd_panel_init at /home/mickey/esp/esp-idf/components/esp_lcd/src/esp_lcd_panel_ops.c:23
+--- 0x400d6e15: lcd_initialize_screen at /home/mickey/Repos/chip-8-esp32/main/lcd.c:91
+--- 0x400d6d57: app_main at /home/mickey/Repos/chip-8-esp32/main/main.c:49
+--- 0x400e745c: main_task at /home/mickey/esp/esp-idf/components/freertos/app_startup.c:208
+--- 0x40087761: vPortTaskWrapper at /home/mickey/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400e6564: lcd_com_reverse_buffer_bytes at /home/mickey/esp/esp-idf/components/esp_lcd/priv_include/esp_lcd_common.h:79
+---  (inlined by) spi_lcd_prepare_param_buffer at /home/mickey/esp/esp-idf/components/esp_lcd/spi/esp_lcd_panel_io_spi.c:200
+[0m
+[0;33m--- 0x4000c2e0: memcpy in ROM
+--- 0x4000c2f6: memcpy in ROM
+[0m
+[0;33m--- 0x400e6561: lcd_com_reverse_buffer_bytes at /home/mickey/esp/esp-idf/components/esp_lcd/priv_include/esp_lcd_common.h:79
+---  (inlined by) spi_lcd_prepare_param_buffer at /home/mickey/esp/esp-idf/components/esp_lcd/spi/esp_lcd_panel_io_spi.c:200
+--- 0x400d780f: panel_io_spi_tx_param at /home/mickey/esp/esp-idf/components/esp_lcd/spi/esp_lcd_panel_io_spi.c:245
+--- 0x400d7282: esp_lcd_panel_io_tx_param at /home/mickey/esp/esp-idf/components/esp_lcd/src/esp_lcd_panel_io.c:23
+--- 0x400d704a: panel_ili9341_init at /home/mickey/Repos/chip-8-esp32/managed_components/espressif__esp_lcd_ili9341/esp_lcd_ili9341.c:241
+--- 0x400d7344: esp_lcd_panel_init at /home/mickey/esp/esp-idf/components/esp_lcd/src/esp_lcd_panel_ops.c:23
+--- 0x400d6e15: lcd_initialize_screen at /home/mickey/Repos/chip-8-esp32/main/lcd.c:91
+--- 0x400d6d57: app_main at /home/mickey/Repos/chip-8-esp32/main/main.c:49
+--- 0x400e745c: main_task at /home/mickey/esp/esp-idf/components/freertos/app_startup.c:208
+--- 0x40087761: vPortTaskWrapper at /home/mickey/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400e6564: lcd_com_reverse_buffer_bytes at /home/mickey/esp/esp-idf/components/esp_lcd/priv_include/esp_lcd_common.h:79
+---  (inlined by) spi_lcd_prepare_param_buffer at /home/mickey/esp/esp-idf/components/esp_lcd/spi/esp_lcd_panel_io_spi.c:200
+[0m
+[0;33m--- 0x4000c2e0: memcpy in ROM
+--- 0x4000c2f6: memcpy in ROM
+[0m
+[0;33m--- 0x400e6561: lcd_com_reverse_buffer_bytes at /home/mickey/esp/esp-idf/components/esp_lcd/priv_include/esp_lcd_common.h:79
+---  (inlined by) spi_lcd_prepare_param_buffer at /home/mickey/esp/esp-idf/components/esp_lcd/spi/esp_lcd_panel_io_spi.c:200
+--- 0x400d780f: panel_io_spi_tx_param at /home/mickey/esp/esp-idf/components/esp_lcd/spi/esp_lcd_panel_io_spi.c:245
+--- 0x400d7282: esp_lcd_panel_io_tx_param at /home/mickey/esp/esp-idf/components/esp_lcd/src/esp_lcd_panel_io.c:23
+--- 0x400d704a: panel_ili9341_init at /home/mickey/Repos/chip-8-esp32/managed_components/espressif__esp_lcd_ili9341/esp_lcd_ili9341.c:241
+--- 0x400d7344: esp_lcd_panel_init at /home/mickey/esp/esp-idf/components/esp_lcd/src/esp_lcd_panel_ops.c:23
+--- 0x400d6e15: lcd_initialize_screen at /home/mickey/Repos/chip-8-esp32/main/lcd.c:91
+--- 0x400d6d57: app_main at /home/mickey/Repos/chip-8-esp32/main/main.c:49
+--- 0x400e745c: main_task at /home/mickey/esp/esp-idf/components/freertos/app_startup.c:208
+--- 0x40087761: vPortTaskWrapper at /home/mickey/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0;33m--- 0x400e6564: lcd_com_reverse_buffer_bytes at /home/mickey/esp/esp-idf/components/esp_lcd/priv_include/esp_lcd_common.h:79
+---  (inlined by) spi_lcd_prepare_param_buffer at /home/mickey/esp/esp-idf/components/esp_lcd/spi/esp_lcd_panel_io_spi.c:200
+[0m
+[0;33m--- 0x4000c2e0: memcpy in ROM
+--- 0x4000c2f6: memcpy in ROM
+[0m
+[0;33m--- 0x400e6561: lcd_com_reverse_buffer_bytes at /home/mickey/esp/esp-idf/components/esp_lcd/priv_include/esp_lcd_common.h:79
+---  (inlined by) spi_lcd_prepare_param_buffer at /home/mickey/esp/esp-idf/components/esp_lcd/spi/esp_lcd_panel_io_spi.c:200
+--- 0x400d780f: panel_io_spi_tx_param at /home/mickey/esp/esp-idf/components/esp_lcd/spi/esp_lcd_panel_io_spi.c:245
+--- 0x400d7282: esp_lcd_panel_io_tx_param at /home/mickey/esp/esp-idf/components/esp_lcd/src/esp_lcd_panel_io.c:23
+--- 0x400d704a: panel_ili9341_init at /home/mickey/Repos/chip-8-esp32/managed_components/espressif__esp_lcd_ili9341/esp_lcd_ili9341.c:241
+--- 0x400d7344: esp_lcd_panel_init at /home/mickey/esp/esp-idf/components/esp_lcd/src/esp_lcd_panel_ops.c:23
+--- 0x400d6e15: lcd_initialize_screen at /home/mickey/Repos/chip-8-esp32/main/lcd.c:91
+--- 0x400d6d57: app_main at /home/mickey/Repos/chip-8-esp32/main/main.c:49
+--- 0x400e745c: main_task at /home/mickey/esp/esp-idf/components/freertos/app_startup.c:208
+--- 0x40087761: vPortTaskWrapper at /home/mickey/esp/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:139
+[0m
+[0;33m--- 0x40080400: _init at ??:?
+[0m
+[0m
