@@ -130,6 +130,10 @@ bool run(Chip8_t *chip8)
 
     //usleep(chip8->emu_state->ideal_step_delay_us);
     instance = chip8;
+
+    printf("Starting CHIP-8 program!\n");
+    printf("Free heap size: %" PRIu32 " bytes\n", esp_get_free_heap_size());
+
     vTaskDelay(pdMS_TO_TICKS(1));
 
     while (chip8->registers->PC < 0xFFF && !should_terminate && !(chip8->emu_state->flags & EMU_FLAG_RESET))
@@ -173,6 +177,7 @@ bool run(Chip8_t *chip8)
             chip8->emu_state->flags &= ~EMU_FLAG_STEP_PRESSED;
         }
 
+        vTaskDelay(pdMS_TO_TICKS(2));
         chip8->emu_state->step_counter++;
 
         // parsing current instruction elements into a structure
@@ -233,7 +238,6 @@ bool run(Chip8_t *chip8)
 				}
 			}
 
-			//HAL_Delay(1);
 			// timing the cycle and compensating as necessary
 			/*chip8->emu_state->cycle_seconds_counter = seconds_since_clock(&chip8->emu_state->start_clock);
 			chip8->emu_state->difference_step_delay_us = chip8->emu_state->ideal_step_delay_us - (1000000 * chip8->emu_state->cycle_seconds_counter);

@@ -17,31 +17,31 @@ void init_display(DisplayLayout_t *layout)
 {
 	gfx_init(0);
 
-	layout->window_chip8 = gfx_create_window(0, 0, 320, 160);
+	layout->window_chip8 = gfx_create_window(0, 0, 320, 160, "Chip-8 Display");
 	layout->display_chip8 = gfx_bytes_to_binary_sprite(32, 8, NULL);
-	layout->window_emu = gfx_create_window(0, 160, 320, 80);
+	layout->window_emu = gfx_create_window(0, 160, 320, 80, "Emulator Data");
 
-	gfx_select_window(layout->window_chip8);
+	gfx_select_window(layout->window_chip8, true);
 	gfx_fill_screen(color_blue);
-	layout->window_chip8->state = GFXWIN_DIRTY;
-	gfx_show_window(layout->window_chip8);
+    gfx_unselect_window(layout->window_chip8);
 
+	gfx_show_window(layout->window_chip8);
 	gfx_show_window(layout->window_emu);
+
 	render_summary(layout->window_emu);
 }
 
 void deinit_display(DisplayLayout_t *layout)
 {
-	gfx_select_window(NULL);
-
 	gfx_hide_window(layout->window_chip8);
 	gfx_hide_window(layout->window_emu);
 
-	free(layout->window_chip8);
+    gfx_dispose_window(layout->window_chip8);
 	layout->window_chip8 = NULL;
 	free(layout->display_chip8);
 	layout->display_chip8 = NULL;
-	free(layout->window_emu);
+
+    gfx_dispose_window(layout->window_emu);
 	layout->window_emu = NULL;
 }
 
@@ -49,20 +49,18 @@ void render_display(Chip8_t *chip8, WINDOW *window_chip8)
 {
 	gfx_bytes_to_binary_sprite_nonalloc(chip8->layout.display_chip8, 32, 8, chip8->display_memory);
 
-	gfx_select_window(window_chip8);
-	window_chip8->state = GFXWIN_WRITING;
+	gfx_select_window(window_chip8, true);
 	gfx_fill_screen(color_blue);
 	gfx_draw_binary_sprite(chip8->layout.display_chip8, 0, 0, color_green, 5);
-	window_chip8->state = GFXWIN_DIRTY;
+    gfx_unselect_window(window_chip8);
 }
 
 void render_summary(WINDOW *window_summary)
 {
-	gfx_select_window(window_summary);
-	window_summary->state = GFXWIN_WRITING;
-	gfx_fill_screen(color_black);
-	gfx_print_string("Mickey's CHIP-8 Emu", 8, 35, color_magenta, 2);
-	window_summary->state = GFXWIN_DIRTY;
+    gfx_select_window(window_summary, true);
+    gfx_fill_screen(color_black);
+    gfx_print_string("Mickey's CHIP-8 Emu", 8, 35, color_magenta, 2);
+    gfx_unselect_window(window_summary);
 }
 
 void render_disassembly(Chip8Instruction_t *instruction, WINDOW *window_disassembly)
@@ -75,10 +73,11 @@ void render_disassembly(Chip8Instruction_t *instruction, WINDOW *window_disassem
     */
 
 	char disassembled_instruction[16] = {0};
+
+	if(!gfx_select_window(window_disassembly, false)) return;
+
     snprintf_instruction(disassembled_instruction, 16, instruction);
 
-	gfx_select_window(window_disassembly);
-	window_disassembly->state = GFXWIN_WRITING;
 	gfx_fill_screen(color_black);
 	gfx_print_string(disassembled_instruction, 0, 0, color_yellow, 3);
 	//gfx_print_string(line_memory[idx], 2, 3, color_yellow, 1);
@@ -97,7 +96,7 @@ void render_disassembly(Chip8Instruction_t *instruction, WINDOW *window_disassem
     if (tail_idx > 15) tail_idx = 0;
     */
 
-	window_disassembly->state = GFXWIN_DIRTY;
+    gfx_unselect_window(window_disassembly);
 }
 
 void render_registers(Chip8Registers_t *registers, WINDOW *window_registers)
@@ -107,8 +106,8 @@ void render_registers(Chip8Registers_t *registers, WINDOW *window_registers)
     Color565_t text_color;
     char text_buffer[32];
 
-	gfx_select_window(window_registers);
-	window_registers->state = GFXWIN_WRITING;
+	if (!gfx_select_window(window_registers, false)) return;
+
 	gfx_fill_screen(color_black);
 
     for (int i = 0; i < 16; i++)
@@ -156,7 +155,7 @@ void render_registers(Chip8Registers_t *registers, WINDOW *window_registers)
 		gfx_print_string(text_buffer, line_length_px, ((i+2)*line_height_px*3) + (line_height_px*2), text_color, 1);
     }
 
-	window_registers->state = GFXWIN_DIRTY;
+    gfx_unselect_window(window_registers);
 }
 
 void render_emulator_state(EmulatorState_t *emu_state, WINDOW *window_emu)
@@ -168,8 +167,8 @@ void render_emulator_state(EmulatorState_t *emu_state, WINDOW *window_emu)
 
     COLOR_OFF;
 
-	gfx_select_window(window_emu);
-	window_emu->state = GFXWIN_WRITING;
+	if (!gfx_select_window(window_emu, false)) return;
+
 	gfx_fill_screen(color_black);
 
     snprintf(text_buffer, 32, "Speed[%.2f]", emu_state->speed_modifier);
@@ -191,5 +190,5 @@ void render_emulator_state(EmulatorState_t *emu_state, WINDOW *window_emu)
         gfx_print_string(text_buffer, (i/4) * (line_length_px), (line_height_px*(i%4))+(line_height_px*4), text_color, 1);
     }
 
-	window_emu->state = GFXWIN_DIRTY;
+    gfx_unselect_window(window_emu);
 }

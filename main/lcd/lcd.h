@@ -20,7 +20,7 @@ typedef enum LCDOrientation
 } LCDOrientation_t;
 
 void lcd_initialize_bus(void);
-void lcd_initialize_interface(void);
+void lcd_initialize_interface(esp_lcd_panel_io_color_trans_done_cb_t tx_done_cb, void *user_ctx);
 esp_lcd_panel_handle_t lcd_initialize_screen(LCDOrientation_t orientation);
 void lcd_deinitialize_screen(void);
 uint16_t lcd_get_width(void);

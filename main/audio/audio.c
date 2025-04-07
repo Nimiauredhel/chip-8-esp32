@@ -19,6 +19,7 @@ static const ledc_channel_config_t audio_channel_config =
 
 void init_audio(void)
 {
+    printf("Initializing LEDC for audio.\n");
     ESP_ERROR_CHECK(ledc_timer_config(&audio_timer_config));
     ESP_ERROR_CHECK(ledc_channel_config(&audio_channel_config));
 }

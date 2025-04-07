@@ -86,9 +86,10 @@ const uint8_t alien_bytes[25] =
 		0b00110000,
 };
 
-const uint16_t half_step_delay = 125;
-const uint16_t step_delay = 250;
-const uint16_t second_delay = 1000;
+const TickType_t half_step_delay = pdMS_TO_TICKS(125);
+const TickType_t step_delay = pdMS_TO_TICKS(250);
+const TickType_t halfsec_delay = pdMS_TO_TICKS(500);
+const TickType_t sec_delay = pdMS_TO_TICKS(1000);
 
 GfxWindow_t * app_window = NULL;
 
@@ -105,9 +106,7 @@ BinarySprite_t *alien_sprite;
 
 void app_init(void)
 {
-	gfx_init(LCD_LANDSCAPE_FLIP);
-	app_window = gfx_create_window(0, 0, screen_get_x_size(), screen_get_y_size());
-	gfx_select_window(app_window);
+	app_window = gfx_create_window(0, 0, screen_get_x_size(), screen_get_y_size(), "Test Window");
 
 	// init color loop
 	for (int i = 0; i < color_loop_length; i+=2)
@@ -130,17 +129,15 @@ void app_init(void)
 
 void app_clean(void)
 {
-	while (app_window->state != GFXWIN_CLEAN)
-    vTaskDelay(pdMS_TO_TICKS(step_delay));
-	app_window->state = GFXWIN_WRITING;
+    gfx_select_window(app_window, true);
 	gfx_fill_screen(color_black);
-	app_window->state = GFXWIN_DIRTY;
+    gfx_unselect_window(app_window);
+    vTaskDelay(step_delay);
 
-	gfx_select_window(NULL);
 	// remove window reference from the refresh list before deallocating
 	// TODO: extract window deallocation steps to function
 	gfx_hide_window(app_window);
-	free(app_window);
+    gfx_dispose_window(app_window);
 }
 
 void app_loop(void)
@@ -149,20 +146,17 @@ void app_loop(void)
 
     set_audio(0, 0);
 
-	app_window->state = GFXWIN_WRITING;
+    gfx_select_window(app_window, true);
 	gfx_fill_screen(color_black);
-	app_window->state = GFXWIN_DIRTY;
+    gfx_unselect_window(app_window);
 
 	// add window to the refresh list
 	gfx_show_window(app_window);
 
-	while (app_window->state != GFXWIN_CLEAN)
-        vTaskDelay(pdMS_TO_TICKS(step_delay));
-
-    vTaskDelay(pdMS_TO_TICKS(step_delay));
+    vTaskDelay(step_delay);
 
 	// font test!
-	app_window->state = GFXWIN_WRITING;
+    gfx_select_window(app_window, true);
 
 	for (int i = 0; i < (128-32); i++)
 	{
@@ -175,102 +169,75 @@ void app_loop(void)
 		&default_font.data[(i+32)*5], x, y*5*4, color_white, 3);
 	}
 
-	app_window->state = GFXWIN_DIRTY;
-	while (app_window->state != GFXWIN_CLEAN)
-        vTaskDelay(pdMS_TO_TICKS(half_step_delay));
+    gfx_unselect_window(app_window);
 
-    vTaskDelay(pdMS_TO_TICKS(step_delay));
+    vTaskDelay(pdMS_TO_TICKS(halfsec_delay));
 
-	app_window->state = GFXWIN_WRITING;
+    gfx_select_window(app_window, true);
 	gfx_fill_screen(color_black);
-	app_window->state = GFXWIN_DIRTY;
-	while (app_window->state != GFXWIN_CLEAN)
-        vTaskDelay(pdMS_TO_TICKS(step_delay));
-
-    vTaskDelay(pdMS_TO_TICKS(half_step_delay));
-
-	app_window->state = GFXWIN_WRITING;
 	gfx_print_string("Text test!", 0, 4, color_red, 3);
 	gfx_print_string("Medium text...", 8, 32, color_magenta, 2);
 	gfx_print_string("small text !@#$%^&*()", 16, 64, color_yellow, 1);
-	app_window->state = GFXWIN_DIRTY;
-	while (app_window->state != GFXWIN_CLEAN)
-        vTaskDelay(pdMS_TO_TICKS(half_step_delay));
+    gfx_unselect_window(app_window);
 
-    vTaskDelay(pdMS_TO_TICKS(half_step_delay));
+    vTaskDelay(sec_delay);
 
     set_audio(A1, 50);
 
-	app_window->state = GFXWIN_WRITING;
+    gfx_select_window(app_window, true);
 	gfx_fill_screen(color_white);
-	app_window->state = GFXWIN_DIRTY;
-	while (app_window->state != GFXWIN_CLEAN)
-        vTaskDelay(pdMS_TO_TICKS(half_step_delay));
+    gfx_unselect_window(app_window);
 
-    vTaskDelay(pdMS_TO_TICKS(half_step_delay));
+    vTaskDelay(step_delay);
 
     set_audio(B1, 50);
-	app_window->state = GFXWIN_WRITING;
+    gfx_select_window(app_window, true);
 	gfx_fill_screen(color_red);
-	app_window->state = GFXWIN_DIRTY;
-	while (app_window->state != GFXWIN_CLEAN)
-        vTaskDelay(pdMS_TO_TICKS(half_step_delay));
+    gfx_unselect_window(app_window);
 
-    vTaskDelay(pdMS_TO_TICKS(half_step_delay));
+    vTaskDelay(step_delay);
 
     set_audio(Db2, 50);
-	app_window->state = GFXWIN_WRITING;
+    gfx_select_window(app_window, true);
 	gfx_fill_screen(color_green);
-	app_window->state = GFXWIN_DIRTY;
-	while (app_window->state != GFXWIN_CLEAN)
-        vTaskDelay(pdMS_TO_TICKS(half_step_delay));
+    gfx_unselect_window(app_window);
 
-    vTaskDelay(pdMS_TO_TICKS(half_step_delay));
+    vTaskDelay(step_delay);
 
     set_audio(D2, 50);
-	app_window->state = GFXWIN_WRITING;
+    gfx_select_window(app_window, true);
 	gfx_fill_screen(color_blue);
-	app_window->state = GFXWIN_DIRTY;
-	while (app_window->state != GFXWIN_CLEAN)
-        vTaskDelay(pdMS_TO_TICKS(half_step_delay));
+    gfx_unselect_window(app_window);
 
-    vTaskDelay(pdMS_TO_TICKS(half_step_delay));
+    vTaskDelay(step_delay);
 
     set_audio(E2, 50);
-	app_window->state = GFXWIN_WRITING;
+    gfx_select_window(app_window, true);
 	gfx_fill_screen(color_cyan);
-	app_window->state = GFXWIN_DIRTY;
-	while (app_window->state != GFXWIN_CLEAN)
-        vTaskDelay(pdMS_TO_TICKS(half_step_delay));
+    gfx_unselect_window(app_window);
 
-    vTaskDelay(pdMS_TO_TICKS(half_step_delay));
+    vTaskDelay(step_delay);
 
     set_audio(Gb2, 50);
-	app_window->state = GFXWIN_WRITING;
+    gfx_select_window(app_window, true);
 	gfx_fill_screen(color_yellow);
-	app_window->state = GFXWIN_DIRTY;
-	while (app_window->state != GFXWIN_CLEAN)
-        vTaskDelay(pdMS_TO_TICKS(half_step_delay));
+    gfx_unselect_window(app_window);
 
-    vTaskDelay(pdMS_TO_TICKS(half_step_delay));
+    vTaskDelay(step_delay);
 
     set_audio(Ab2, 50);
-	app_window->state = GFXWIN_WRITING;
+    gfx_select_window(app_window, true);
 	gfx_fill_screen(color_magenta);
-	app_window->state = GFXWIN_DIRTY;
-	while (app_window->state != GFXWIN_CLEAN)
-        vTaskDelay(pdMS_TO_TICKS(half_step_delay));
+    gfx_unselect_window(app_window);
 
-    vTaskDelay(pdMS_TO_TICKS(half_step_delay));
+    vTaskDelay(step_delay);
 
     set_audio(A2, 50);
-	app_window->state = GFXWIN_WRITING;
+    gfx_select_window(app_window, true);
 	gfx_fill_screen(color_black);
-	app_window->state = GFXWIN_DIRTY;
-	while (app_window->state != GFXWIN_CLEAN)
-        vTaskDelay(pdMS_TO_TICKS(half_step_delay));
+    gfx_unselect_window(app_window);
 
-    vTaskDelay(pdMS_TO_TICKS(step_delay));
+    vTaskDelay(step_delay);
 
     set_audio(0, 0);
 /*
@@ -359,102 +326,82 @@ void app_loop(void)
 
 	while (scale < 1.0f)
 	{
-		scale += 0.25f;
-		app_window->state = GFXWIN_WRITING;
+		scale += 0.125f;
+        gfx_select_window(app_window, true);
 		gfx_fill_rect_loop(color_loop, color_loop_length, 160 - (160 * scale), 120 - (120 * scale), 320 * scale, 240 * scale);
-		app_window->state = GFXWIN_DIRTY;
+        gfx_unselect_window(app_window);
 
         set_audio(D2 / scale, 50);
-        vTaskDelay(pdMS_TO_TICKS(step_delay));
+        vTaskDelay(half_step_delay);
         set_audio(A1 / scale, 50);
-        vTaskDelay(pdMS_TO_TICKS(step_delay));
+        vTaskDelay(half_step_delay);
         set_audio(Gb1 / scale, 50);
-        vTaskDelay(pdMS_TO_TICKS(step_delay));
+        vTaskDelay(half_step_delay);
         set_audio(D1 / scale, 50);
-        vTaskDelay(pdMS_TO_TICKS(step_delay));
+        vTaskDelay(half_step_delay);
         set_audio(0, 0);
 
-		while (app_window->state != GFXWIN_CLEAN)
-            vTaskDelay(pdMS_TO_TICKS(half_step_delay));
-        vTaskDelay(pdMS_TO_TICKS(step_delay));
 	}
 
-    vTaskDelay(pdMS_TO_TICKS(step_delay));
+    vTaskDelay(step_delay);
 
+    gfx_select_window(app_window, true);
 	gfx_draw_binary_sprite(hello_sprite, 160-20+2, 120-15, hello_color, 1);
 	gfx_draw_binary_sprite(world_sprite, 160-20+2, 120+10, world_color, 1);
 	gfx_draw_binary_sprite(alien_sprite, 16, 130, alien_color, 11);
+    gfx_unselect_window(app_window);
 
-	app_window->state = GFXWIN_DIRTY;
-	while (app_window->state != GFXWIN_CLEAN)
-        vTaskDelay(pdMS_TO_TICKS(step_delay));
+    vTaskDelay(step_delay);
 
-    vTaskDelay(pdMS_TO_TICKS(step_delay));
-
-	app_window->state = GFXWIN_WRITING;
-
+    gfx_select_window(app_window, true);
 	gfx_fill_rect_loop(color_loop, color_loop_length, 0, 0, 320, 240);
 	gfx_draw_binary_sprite(hello_sprite, 160-40+4, 120-20, hello_color, 2);
 	gfx_draw_binary_sprite(world_sprite, 160-40+4, 120+10, world_color, 2);
 	gfx_draw_binary_sprite(alien_sprite, 32, 130, alien_color, 10);
-
-	app_window->state = GFXWIN_DIRTY;
+    gfx_unselect_window(app_window);
     set_audio(C2, 50);
-	while (app_window->state != GFXWIN_CLEAN)
-        vTaskDelay(pdMS_TO_TICKS(step_delay));
 
-    vTaskDelay(pdMS_TO_TICKS(step_delay));
-	app_window->state = GFXWIN_WRITING;
+    vTaskDelay(step_delay);
 
+    gfx_select_window(app_window, true);
 	gfx_fill_rect_loop(color_loop, color_loop_length, 0, 0, 320, 240);
 	gfx_draw_binary_sprite(hello_sprite, 160-80+8, 120-30, hello_color, 4);
 	gfx_draw_binary_sprite(world_sprite, 160-80+8, 120+10, world_color, 4);
 	gfx_draw_binary_sprite(alien_sprite, 48, 130, alien_color, 9);
 
-	app_window->state = GFXWIN_DIRTY;
-	/*htim9.Instance->ARR = pitch = Gb2;
-	htim9.Instance->CCR1 = pitch/2;*/
-	while (app_window->state != GFXWIN_CLEAN)
-        vTaskDelay(pdMS_TO_TICKS(step_delay));
+    gfx_unselect_window(app_window);
+    set_audio(Gb2, 50);
 
-    vTaskDelay(pdMS_TO_TICKS(step_delay));
-	app_window->state = GFXWIN_WRITING;
+    vTaskDelay(step_delay);
 
+    gfx_select_window(app_window, true);
 	gfx_fill_rect_loop(color_loop, color_loop_length, 0, 0, 320, 240);
 	gfx_draw_binary_sprite(alien_sprite, 64, 130, alien_color, 8);
 	gfx_draw_binary_sprite(hello_sprite, 24, 120-42, color_black, 8);
 	gfx_draw_binary_sprite(world_sprite, 24, 120+18, color_black, 8);
 	gfx_draw_binary_sprite(hello_sprite, 16, 120-50, hello_color, 8);
 	gfx_draw_binary_sprite(world_sprite, 16, 120+10, world_color, 8);
-	app_window->state = GFXWIN_DIRTY;
-	/*htim9.Instance->ARR = pitch = C3;
-	htim9.Instance->CCR1 = pitch/2;*/
-	while (app_window->state != GFXWIN_CLEAN)
-        vTaskDelay(pdMS_TO_TICKS(step_delay));
+    gfx_unselect_window(app_window);
+    set_audio(C3, 50);
 
-    vTaskDelay(pdMS_TO_TICKS(step_delay));
-    vTaskDelay(pdMS_TO_TICKS(step_delay));
-    vTaskDelay(pdMS_TO_TICKS(step_delay));
+    vTaskDelay(halfsec_delay);
 
 	int16_t alien_x = 152;
 
 	while (alien_x < 328)
 	{
-		app_window->state = GFXWIN_WRITING;
+        gfx_select_window(app_window, true);
 		gfx_fill_rect_loop(color_loop, color_loop_length, 0, 120, 320, 120);
 		gfx_draw_binary_sprite(alien_sprite, alien_x, 130, alien_color, 8);
-		app_window->state = GFXWIN_DIRTY;
-        set_audio(Gb1 * (1 + alien_x / 320.0f), 50);
-        vTaskDelay(pdMS_TO_TICKS(half_step_delay));
+        gfx_unselect_window(app_window);
+        set_audio(Gb1 * ((1 + alien_x) / 320.0f), 50);
+        vTaskDelay(half_step_delay);
         set_audio(0, 0);
 		alien_x += 32;
-		while (app_window->state != GFXWIN_CLEAN)
-            vTaskDelay(pdMS_TO_TICKS(half_step_delay));
-        vTaskDelay(pdMS_TO_TICKS(step_delay));
+        vTaskDelay(half_step_delay);
 	}
 
-    vTaskDelay(pdMS_TO_TICKS(step_delay));
+    vTaskDelay(step_delay);
     set_audio(0, 0);
-    vTaskDelay(pdMS_TO_TICKS(step_delay));
-    vTaskDelay(pdMS_TO_TICKS(step_delay));
+    vTaskDelay(halfsec_delay);
 }

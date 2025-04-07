@@ -26,6 +26,8 @@ Chip8_t *create_instance(uint16_t *rom)
     Chip8_t *chip8 = malloc(sizeof(Chip8_t));
     explicit_bzero(chip8, sizeof(Chip8_t));
 
+    printf("Free heap size: %" PRIu32 " bytes\n", esp_get_free_heap_size());
+
     printf("Storing %lu bytes of interpreter data in the lower 512 bytes of CHIP-8 memory.\n",
             (uint32_t)(sizeof(Chip8Instruction_t) + sizeof(Chip8Registers_t) + sizeof(EmulatorState_t) + 80));
     vTaskDelay(pdMS_TO_TICKS(100));

@@ -2,8 +2,6 @@
 
 #define LCD_HOST 1
 
-static bool on_color_transmission_done(esp_lcd_panel_io_handle_t panel_io, esp_lcd_panel_io_event_data_t *edata, void *user_ctx);
-
 // bus variables
 spi_bus_config_t buscfg =
 {
@@ -28,7 +26,7 @@ esp_lcd_panel_io_spi_config_t io_config =
     .lcd_param_bits = 8,  // Number of bits per LCD parameter, should be a multiple of 8
     .spi_mode = 0,                             // SPI mode (0-3); determine based on the LCD driver IC data sheet and hardware configuration (e.g., IM[3:0])
     .trans_queue_depth = 10,                   // Queue depth for SPI device data transmission; usually set to 10
-    .on_color_trans_done = on_color_transmission_done,   // Callback function after a single call to `esp_lcd_panel_draw_bitmap()` completes transmission
+    .on_color_trans_done = NULL,   // Callback function after a single call to `esp_lcd_panel_draw_bitmap()` completes transmission
     .user_ctx = NULL, //&example_user_ctx,             // User parameter passed to the callback function
                                                
     // Parameters related to SPI timing; determine based on the LCD driver IC data sheet and hardware configuration
@@ -58,33 +56,33 @@ esp_lcd_panel_dev_config_t panel_config = {
 static uint16_t lcd_width = 240;
 static uint16_t lcd_height = 320;
 
-static bool on_color_transmission_done(esp_lcd_panel_io_handle_t panel_io, esp_lcd_panel_io_event_data_t *edata, void *user_ctx)
-{
-        /* Callback function when color data transmission is completed; perform operations here if needed */
-
-    return false;
-}
-
 void lcd_initialize_bus(void)
 {
+    printf("Initializing SPI & DMA bus for LCD.\n");
     ESP_ERROR_CHECK(spi_bus_initialize(LCD_HOST, &buscfg, SPI_DMA_CH_AUTO));
     // The 1st parameter represents the SPI host ID used, consistent with subsequent interface device creation
     // The 3rd parameter represents the DMA channel number used, set to `SPI_DMA_CH_AUTO` by default
 }
 
-void lcd_initialize_interface(void)
+void lcd_initialize_interface(esp_lcd_panel_io_color_trans_done_cb_t tx_done_cb, void *user_ctx)
 {
+    printf("Initializing SPI interface for LCD.\n");
     ESP_ERROR_CHECK(esp_lcd_new_panel_io_spi((esp_lcd_spi_bus_handle_t)LCD_HOST, &io_config, &io_handle));
 
     /* The following functions can also be used to register the callback function for color data transmission completion events */
-    // const esp_lcd_panel_io_callbacks_t cbs = {
-    //     .on_color_trans_done = example_on_color_trans_dome,
-    // };
-    // esp_lcd_panel_io_register_event_callbacks(io_handle, &cbs, &example_user_ctx);
+    if (tx_done_cb != NULL)
+    {
+        const esp_lcd_panel_io_callbacks_t cbs = {
+            .on_color_trans_done = tx_done_cb,
+        };
+
+        esp_lcd_panel_io_register_event_callbacks(io_handle, &cbs, user_ctx);
+    }
 }
 
 esp_lcd_panel_handle_t lcd_initialize_screen(LCDOrientation_t orientation)
 {
+    printf("Initializing LCD screen handle.\n");
     /* Create the LCD device */
     ESP_ERROR_CHECK(esp_lcd_new_panel_ili9341(io_handle, &panel_config, &panel_handle));
 

@@ -20,9 +20,8 @@
 
 void app_main(void)
 {
-    printf("Hello world!\n");
-
     /* Print chip information */
+    /*
     esp_chip_info_t chip_info;
     uint32_t flash_size;
     esp_chip_info(&chip_info);
@@ -44,14 +43,20 @@ void app_main(void)
 
     printf("%" PRIu32 "MB %s flash\n", flash_size / (uint32_t)(1024 * 1024),
            (chip_info.features & CHIP_FEATURE_EMB_FLASH) ? "embedded" : "external");
+    */
 
     printf("Minimum free heap size: %" PRIu32 " bytes\n", esp_get_minimum_free_heap_size());
 
     init_audio();
+	gfx_init(LCD_LANDSCAPE_FLIP);
 
+    printf("Free heap size after Gfx init: %" PRIu32 " bytes\n", esp_get_free_heap_size());
     app_init();
+    printf("Free heap size after \"Gfx App\" init: %" PRIu32 " bytes\n", esp_get_free_heap_size());
     app_loop();
+    printf("Free heap size after \"Gfx App\" loop: %" PRIu32 " bytes\n", esp_get_free_heap_size());
     app_clean();
+    printf("Free heap size after \"Gfx App\" clean: %" PRIu32 " bytes\n", esp_get_free_heap_size());
 
     chip8start();
 
