@@ -4,6 +4,9 @@ roms/
 temp/
 build/
 
+*.old
+*.lock
+
 # Prerequisites
 *.d
 

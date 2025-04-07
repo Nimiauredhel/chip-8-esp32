@@ -1,2 +1,0 @@
-source /home/mickey/Repos/chip-8-esp32/build/bootloader/gdbinit/symbols
-source /home/mickey/Repos/chip-8-esp32/build/bootloader/gdbinit/connect
