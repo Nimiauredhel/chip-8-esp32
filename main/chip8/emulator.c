@@ -222,11 +222,11 @@ bool run(Chip8_t *chip8)
             // TODO: when audio is reimplemented, the audio timer should be handled here
 			if (chip8->registers->ST <= 0)
 			{
-                set_audio(0, 0);
+                set_audio(A4, 0.0f);
 			}
 			else
 			{
-                set_audio(A4, 50);
+                set_audio(A4, chip8->registers->ST / 255.0f);
 			}
 
 			if (hardware_timer_long_counter >= 75)
@@ -547,7 +547,7 @@ void execute_instruction(Chip8_t *chip8, Chip8Instruction_t *instruction, WINDOW
 
                 if (Vx > 0)
                 {
-                    set_audio(A4, 50);
+                    set_audio(A4, chip8->registers->ST / 255.0f);
                 }
             }
             break;

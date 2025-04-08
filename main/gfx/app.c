@@ -86,9 +86,9 @@ const uint8_t alien_bytes[25] =
 		0b00110000,
 };
 
-const TickType_t quart_step_delay = pdMS_TO_TICKS(50);
-const TickType_t half_step_delay = pdMS_TO_TICKS(100);
-const TickType_t step_delay = pdMS_TO_TICKS(200);
+const TickType_t quart_step_delay = pdMS_TO_TICKS(80);
+const TickType_t half_step_delay = pdMS_TO_TICKS(160);
+const TickType_t step_delay = pdMS_TO_TICKS(320);
 const TickType_t halfsec_delay = pdMS_TO_TICKS(500);
 const TickType_t sec_delay = pdMS_TO_TICKS(1000);
 
@@ -145,7 +145,7 @@ void app_loop(void)
 {
 	uint16_t pitch = A1;
 
-    set_audio(0, 0);
+    set_audio(pitch, 0.0f);
 
     gfx_select_window(app_window, true);
 	gfx_fill_screen(color_black);
@@ -183,146 +183,177 @@ void app_loop(void)
 
     vTaskDelay(halfsec_delay);
 
-    set_audio(A1, 50);
+    set_audio(A2, 0.9f);
 
     gfx_select_window(app_window, true);
 	gfx_fill_screen(color_white);
     gfx_unselect_window(app_window);
 
-    vTaskDelay(step_delay);
+    vTaskDelay(half_step_delay);
 
-    set_audio(B1, 50);
+    set_audio(B2, 0.8f);
     gfx_select_window(app_window, true);
 	gfx_fill_screen(color_red);
     gfx_unselect_window(app_window);
 
-    vTaskDelay(step_delay);
+    vTaskDelay(half_step_delay);
 
-    set_audio(Db2, 50);
+    set_audio(Db3, 0.7f);
     gfx_select_window(app_window, true);
 	gfx_fill_screen(color_green);
     gfx_unselect_window(app_window);
 
-    vTaskDelay(step_delay);
+    vTaskDelay(half_step_delay);
 
-    set_audio(D2, 50);
+    set_audio(D3, 0.6f);
     gfx_select_window(app_window, true);
 	gfx_fill_screen(color_blue);
     gfx_unselect_window(app_window);
 
-    vTaskDelay(step_delay);
+    vTaskDelay(half_step_delay);
 
-    set_audio(E2, 50);
+    set_audio(E3, 0.5f);
     gfx_select_window(app_window, true);
 	gfx_fill_screen(color_cyan);
     gfx_unselect_window(app_window);
 
-    vTaskDelay(step_delay);
+    vTaskDelay(half_step_delay);
 
-    set_audio(Gb2, 50);
+    set_audio(Gb3, 0.4f);
     gfx_select_window(app_window, true);
 	gfx_fill_screen(color_yellow);
     gfx_unselect_window(app_window);
 
-    vTaskDelay(step_delay);
+    vTaskDelay(half_step_delay);
 
-    set_audio(Ab2, 50);
+    set_audio(Ab2, 0.3f);
     gfx_select_window(app_window, true);
 	gfx_fill_screen(color_magenta);
     gfx_unselect_window(app_window);
 
     vTaskDelay(step_delay);
 
-    set_audio(A2, 50);
+    set_audio(Ab3, 0.0f);
     gfx_select_window(app_window, true);
 	gfx_fill_screen(color_black);
     gfx_unselect_window(app_window);
 
     vTaskDelay(step_delay);
 
-    set_audio(0, 0);
-/*
+    set_audio(A2, 0.75f);
+    gfx_select_window(app_window, true);
 	gfx_rgb_to_565_nonalloc(color, 75, 25, 0);
 	gfx_fill_rect_single_color(0, 0, 80, 60, color);
-	gfx_dirty = true;
-	HAL_Delay(step_delay);
+    gfx_unselect_window(app_window);
+    vTaskDelay(quart_step_delay);
 
+    set_audio(F2, 0.5f);
+    gfx_select_window(app_window, true);
 	gfx_rgb_to_565_nonalloc(color, 50, 50, 0);
 	gfx_fill_rect_single_color(80, 0, 80, 60, color);
-	gfx_dirty = true;
-	HAL_Delay(step_delay);
+    gfx_unselect_window(app_window);
+    vTaskDelay(quart_step_delay);
 
+    set_audio(C3, 0.75f);
+    gfx_select_window(app_window, true);
 	gfx_rgb_to_565_nonalloc(color, 25, 75, 0);
 	gfx_fill_rect_single_color(160, 0, 80, 60, color);
-	gfx_dirty = true;
-	HAL_Delay(step_delay);
+    gfx_unselect_window(app_window);
+    vTaskDelay(quart_step_delay);
 
+    set_audio(A2, 0.5f);
+    gfx_select_window(app_window, true);
 	gfx_rgb_to_565_nonalloc(color, 0, 100, 0);
 	gfx_fill_rect_single_color(240, 0, 80, 60, color);
-	gfx_dirty = true;
-	HAL_Delay(step_delay);
+    gfx_unselect_window(app_window);
+    vTaskDelay(quart_step_delay);
 
+    set_audio(F2, 0.25f);
+    gfx_select_window(app_window, true);
 	gfx_rgb_to_565_nonalloc(color, 0, 75, 25);
 	gfx_fill_rect_single_color(240, 60, 80, 60, color);
-	gfx_dirty = true;
-	HAL_Delay(step_delay);
+    gfx_unselect_window(app_window);
+    vTaskDelay(quart_step_delay);
 
+    set_audio(C2, 0.5f);
+    gfx_select_window(app_window, true);
 	gfx_rgb_to_565_nonalloc(color, 0, 50, 50);
 	gfx_fill_rect_single_color(160, 60, 80, 60, color);
-	gfx_dirty = true;
-	HAL_Delay(step_delay);
+    gfx_unselect_window(app_window);
+    vTaskDelay(quart_step_delay);
 
+    set_audio(Ab1, 0.25f);
+    gfx_select_window(app_window, true);
 	gfx_rgb_to_565_nonalloc(color, 0, 25, 75);
 	gfx_fill_rect_single_color(80, 60, 80, 60, color);
-	gfx_dirty = true;
-	HAL_Delay(step_delay);
+    gfx_unselect_window(app_window);
+    vTaskDelay(quart_step_delay);
 
+    set_audio(Eb2, 0.5f);
+    gfx_select_window(app_window, true);
 	gfx_rgb_to_565_nonalloc(color, 0, 0, 100);
 	gfx_fill_rect_single_color(0, 60, 80, 60, color);
-	gfx_dirty = true;
-	HAL_Delay(step_delay);
+    gfx_unselect_window(app_window);
+    vTaskDelay(quart_step_delay);
 
+    set_audio(C2, 0.25f);
+    gfx_select_window(app_window, true);
 	gfx_rgb_to_565_nonalloc(color, 75, 25, 0);
 	gfx_fill_rect_single_color(0, 120, 80, 60, color);
-	gfx_dirty = true;
-	HAL_Delay(step_delay);
+    gfx_unselect_window(app_window);
+    vTaskDelay(quart_step_delay);
 
+    set_audio(Ab1, 0.125f);
+    gfx_select_window(app_window, true);
 	gfx_rgb_to_565_nonalloc(color, 50, 50, 0);
 	gfx_fill_rect_single_color(80, 120, 80, 60, color);
-	gfx_dirty = true;
-	HAL_Delay(step_delay);
+    gfx_unselect_window(app_window);
+    vTaskDelay(quart_step_delay);
 
+    set_audio(Eb3, 0.75f);
+    gfx_select_window(app_window, true);
 	gfx_rgb_to_565_nonalloc(color, 25, 75, 0);
 	gfx_fill_rect_single_color(160, 120, 80, 60, color);
-	gfx_dirty = true;
-	HAL_Delay(step_delay);
+    gfx_unselect_window(app_window);
+    vTaskDelay(quart_step_delay);
 
+    set_audio(B2, 0.5f);
+    gfx_select_window(app_window, true);
 	gfx_rgb_to_565_nonalloc(color, 0, 100, 0);
 	gfx_fill_rect_single_color(240, 120, 80, 60, color);
-	gfx_dirty = true;
-	HAL_Delay(step_delay);
+    gfx_unselect_window(app_window);
+    vTaskDelay(quart_step_delay);
 
+    set_audio(Gb3, 0.75f);
+    gfx_select_window(app_window, true);
 	gfx_rgb_to_565_nonalloc(color, 0, 75, 25);
 	gfx_fill_rect_single_color(240, 180, 80, 60, color);
-	gfx_dirty = true;
-	HAL_Delay(step_delay);
+    gfx_unselect_window(app_window);
+    vTaskDelay(quart_step_delay);
 
+    set_audio(Eb3, 0.5f);
+    gfx_select_window(app_window, true);
 	gfx_rgb_to_565_nonalloc(color, 0, 50, 50);
 	gfx_fill_rect_single_color(160, 180, 80, 60, color);
-	gfx_dirty = true;
-	HAL_Delay(step_delay);
+    gfx_unselect_window(app_window);
+    vTaskDelay(quart_step_delay);
 
+    set_audio(B2, 0.25f);
+    gfx_select_window(app_window, true);
 	gfx_rgb_to_565_nonalloc(color, 0, 25, 75);
 	gfx_fill_rect_single_color(80, 180, 80, 60, color);
-	gfx_dirty = true;
-	HAL_Delay(step_delay);
+    gfx_unselect_window(app_window);
+    vTaskDelay(quart_step_delay);
 
+    set_audio(Gb3, 0.125f);
+    gfx_select_window(app_window, true);
 	gfx_rgb_to_565_nonalloc(color, 0, 0, 100);
 	gfx_fill_rect_single_color(0, 180, 80, 60, color);
-	gfx_dirty = true;
-	HAL_Delay(step_delay);
-	HAL_Delay(step_delay);
-*/
+    gfx_unselect_window(app_window);
+    vTaskDelay(step_delay);
+    set_audio(Gb3, 0.25f);
+    vTaskDelay(step_delay);
+
 	float scale = 0.00f;
 
 	while (scale < 1.0f)
@@ -332,19 +363,31 @@ void app_loop(void)
 		gfx_fill_rect_loop(color_loop, color_loop_length, 160 - (160 * scale), 120 - (120 * scale), 320 * scale, 240 * scale);
         gfx_unselect_window(app_window);
 
-        set_audio(D2 / scale, 50);
+        set_audio(D2 * scale, 0.95f);
         vTaskDelay(quart_step_delay);
-        set_audio(A1 / scale, 50);
+        set_audio(A1 * scale, 0.75f);
         vTaskDelay(quart_step_delay);
-        set_audio(Gb1 / scale, 50);
+        set_audio(Gb1 * scale, 0.55f);
         vTaskDelay(quart_step_delay);
-        set_audio(D1 / scale, 50);
+        set_audio(D1 * scale, 0.0f);
+        vTaskDelay(half_step_delay);
+        set_audio(Db2 * scale, 0.55f);
         vTaskDelay(quart_step_delay);
-        set_audio(0, 0);
 
 	}
 
+    set_audio(C2, 0.2f);
     vTaskDelay(half_step_delay);
+    set_audio(Ab1, 0.15f);
+    vTaskDelay(half_step_delay);
+    set_audio(Eb1, 0.1f);
+    vTaskDelay(half_step_delay);
+    set_audio(C1, 0.00f);
+    vTaskDelay(half_step_delay);
+    set_audio(Gb0, 0.75f);
+    vTaskDelay(quart_step_delay);
+    set_audio(Gb0, 0.0f);
+    vTaskDelay(quart_step_delay);
 
     gfx_select_window(app_window, true);
 	gfx_draw_binary_sprite(hello_sprite, 160-20+2, 120-15, hello_color, 1);
@@ -360,7 +403,7 @@ void app_loop(void)
 	gfx_draw_binary_sprite(world_sprite, 160-40+4, 120+10, world_color, 2);
 	gfx_draw_binary_sprite(alien_sprite, 32, 130, alien_color, 10);
     gfx_unselect_window(app_window);
-    set_audio(C2, 50);
+    set_audio(C2, 0.3f);
 
     vTaskDelay(half_step_delay);
 
@@ -370,7 +413,7 @@ void app_loop(void)
 	gfx_draw_binary_sprite(world_sprite, 160-80+8, 120+10, world_color, 4);
 	gfx_draw_binary_sprite(alien_sprite, 48, 130, alien_color, 9);
     gfx_unselect_window(app_window);
-    set_audio(Gb2, 50);
+    set_audio(Gb2, 0.35f);
 
     vTaskDelay(half_step_delay);
 
@@ -382,26 +425,26 @@ void app_loop(void)
 	gfx_draw_binary_sprite(hello_sprite, 16, 120-50, hello_color, 8);
 	gfx_draw_binary_sprite(world_sprite, 16, 120+10, world_color, 8);
     gfx_unselect_window(app_window);
-    set_audio(C3, 50);
+    set_audio(C3, 0.4f);
 
     vTaskDelay(halfsec_delay);
 
 	int16_t alien_x = 152;
 
-	while (alien_x < 342)
+	while (alien_x < 304)
 	{
         gfx_select_window(app_window, true);
 		gfx_fill_rect_loop(color_loop, color_loop_length, 0, 120, 320, 120);
 		gfx_draw_binary_sprite(alien_sprite, alien_x, 130, alien_color, 8);
         gfx_unselect_window(app_window);
-        set_audio(Gb1 * ((1 + alien_x) / 320.0f), 50);
+        set_audio(Gb1 * ((1 + alien_x) / 320.0f), 0.5f);
         vTaskDelay(quart_step_delay);
-        set_audio(0, 0);
-		alien_x += 32;
+        set_audio(Gb1 * (((1 + alien_x) / 320.0f) / 2), 0.2f);
+		alien_x += 16;
         vTaskDelay(quart_step_delay);
 	}
 
     vTaskDelay(step_delay);
-    set_audio(0, 0);
+    set_audio(0, 0.0f);
     vTaskDelay(halfsec_delay);
 }

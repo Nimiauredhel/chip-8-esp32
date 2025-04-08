@@ -6,6 +6,7 @@ static const ledc_timer_config_t audio_timer_config =
     .timer_num = LEDC_TIMER_0,
     .freq_hz = 440,
     .duty_resolution = LEDC_TIMER_8_BIT,
+    .clk_cfg = LEDC_USE_REF_TICK,
 };
 
 static const ledc_channel_config_t audio_channel_config =
@@ -24,19 +25,18 @@ void init_audio(void)
     ESP_ERROR_CHECK(ledc_channel_config(&audio_channel_config));
 }
 
-void set_audio(uint32_t frequency, uint32_t duty)
+void set_audio(uint32_t pitch_period, float duty_percent)
 {
-    if (frequency > 0)
+    uint32_t duty_resolution = 8;
+    uint32_t duty_max = 255;
+
+    if (duty_percent > 0.0f)
     {
-        ESP_ERROR_CHECK(ledc_set_freq(LEDC_LOW_SPEED_MODE, LEDC_TIMER_0, frequency));
-        ESP_ERROR_CHECK(ledc_set_duty(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_0, duty));
-        ESP_ERROR_CHECK(ledc_update_duty(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_0));
+        ESP_ERROR_CHECK(ledc_timer_set(LEDC_LOW_SPEED_MODE, LEDC_TIMER_0, pitch_period, duty_resolution, LEDC_REF_TICK));
     }
-    else
-    {
-        ESP_ERROR_CHECK(ledc_set_duty(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_0, 0));
-        ESP_ERROR_CHECK(ledc_update_duty(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_0));
-    }
+
+    ESP_ERROR_CHECK(ledc_set_duty(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_0, duty_max * duty_percent));
+    ESP_ERROR_CHECK(ledc_update_duty(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_0));
 }
 
 void deinit_audio(void)
