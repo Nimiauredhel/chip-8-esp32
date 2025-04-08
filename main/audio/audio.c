@@ -13,7 +13,7 @@ static const ledc_channel_config_t audio_channel_config =
     .speed_mode = LEDC_LOW_SPEED_MODE,
     .duty = 0,
     .channel = LEDC_CHANNEL_0,
-    .gpio_num = 23,
+    .gpio_num = 12,
     .timer_sel = LEDC_TIMER_0,
 };
 

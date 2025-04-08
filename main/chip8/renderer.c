@@ -49,6 +49,7 @@ void render_display(Chip8_t *chip8, WINDOW *window_chip8)
 {
 	gfx_bytes_to_binary_sprite_nonalloc(chip8->layout.display_chip8, 32, 8, chip8->display_memory);
 
+    vPortYield();
 	gfx_select_window(window_chip8, true);
 	gfx_fill_screen(color_blue);
 	gfx_draw_binary_sprite(chip8->layout.display_chip8, 0, 0, color_green, 5);
@@ -57,6 +58,7 @@ void render_display(Chip8_t *chip8, WINDOW *window_chip8)
 
 void render_summary(WINDOW *window_summary)
 {
+    vPortYield();
     gfx_select_window(window_summary, true);
     gfx_fill_screen(color_black);
     gfx_print_string("Mickey's CHIP-8 Emu", 8, 35, color_magenta, 2);
@@ -74,6 +76,7 @@ void render_disassembly(Chip8Instruction_t *instruction, WINDOW *window_disassem
 
 	char disassembled_instruction[16] = {0};
 
+    vPortYield();
 	if(!gfx_select_window(window_disassembly, false)) return;
 
     snprintf_instruction(disassembled_instruction, 16, instruction);
@@ -106,6 +109,7 @@ void render_registers(Chip8Registers_t *registers, WINDOW *window_registers)
     Color565_t text_color;
     char text_buffer[32];
 
+    vPortYield();
 	if (!gfx_select_window(window_registers, false)) return;
 
 	gfx_fill_screen(color_black);
@@ -167,6 +171,7 @@ void render_emulator_state(EmulatorState_t *emu_state, WINDOW *window_emu)
 
     COLOR_OFF;
 
+    vPortYield();
 	if (!gfx_select_window(window_emu, false)) return;
 
 	gfx_fill_screen(color_black);

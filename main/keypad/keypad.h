@@ -42,8 +42,9 @@
 #include <stdbool.h>
 
 #include "driver/gpio.h"
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
 
-void keypad_initialize(void);
 uint16_t keypad_get_state(void);
 
 #endif /* KEYPAD_H_ */

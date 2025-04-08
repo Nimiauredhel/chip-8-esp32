@@ -3,6 +3,7 @@
 static Chip8_t *instance = NULL;
 static volatile uint16_t render_queue = 0;
 static volatile uint16_t hardware_timer_short_counter = 0;
+static volatile uint16_t hardware_timer_medium_counter = 0;
 static volatile uint16_t hardware_timer_long_counter = 0;
 
 /**
@@ -134,20 +135,23 @@ bool run(Chip8_t *chip8)
     printf("Starting CHIP-8 program!\n");
     printf("Free heap size: %" PRIu32 " bytes\n", esp_get_free_heap_size());
 
-    vTaskDelay(pdMS_TO_TICKS(1));
+    vTaskDelay(pdMS_TO_TICKS(2));
 
     while (chip8->registers->PC < 0xFFF && !should_terminate && !(chip8->emu_state->flags & EMU_FLAG_RESET))
     {
-    	while (hardware_timer_short_counter < 4)
-    	{
+        vPortYield();
+        read_input(chip8->emu_state->emu_key_states, chip8->emu_state->chip8_key_states);
+        emu_handle_input(instance);
 
+    	if (hardware_timer_short_counter < 4)
+    	{
+            continue;
     	}
+
     	hardware_timer_short_counter = 0;
+
         // getting the start clock of the cycle to approximate our ideal frequency
         //clock_gettime(CLOCK_MONOTONIC, (struct timespec *)&chip8->emu_state->start_clock);
-
-        emu_handle_input(instance);
-        read_input(instance->emu_state->emu_key_states, instance->emu_state->chip8_key_states);
 
     	if (chip8->emu_state->flags >> 5 == EMU_FLAG_SHOW_SUMMARY >> 5)
     	{
@@ -156,10 +160,14 @@ bool run(Chip8_t *chip8)
     	}
         // render emulator (mostly timing) stats
     	else if (chip8->emu_state->flags & EMU_FLAG_SHOW_STATE)
-        render_emulator_state(chip8->emu_state, chip8->layout.window_emu);
+        {
+            render_emulator_state(chip8->emu_state, chip8->layout.window_emu);
+        }
         // render content of Chip-8 & extra VM registers.
     	else if (chip8->emu_state->flags & EMU_FLAG_SHOW_REGS)
-        render_registers(chip8->registers, chip8->layout.window_emu);
+        {
+            render_registers(chip8->registers, chip8->layout.window_emu);
+        }
 
         if (should_terminate) break;
 
@@ -177,7 +185,7 @@ bool run(Chip8_t *chip8)
             chip8->emu_state->flags &= ~EMU_FLAG_STEP_PRESSED;
         }
 
-        vTaskDelay(pdMS_TO_TICKS(2));
+        //vTaskDelay(pdMS_TO_TICKS(2));
         chip8->emu_state->step_counter++;
 
         // parsing current instruction elements into a structure
@@ -194,7 +202,9 @@ bool run(Chip8_t *chip8)
 
         // rendering the disassembled instruction
     	if (chip8->emu_state->flags & EMU_FLAG_SHOW_DISASS)
+        {
             render_disassembly(chip8->instruction, chip8->layout.window_emu);
+        }
 
         // executing the actual instruction;
         execute_instruction(chip8, chip8->instruction, chip8->layout.window_chip8);
@@ -227,9 +237,6 @@ bool run(Chip8_t *chip8)
 				if (instance->registers->DT > 0) instance->registers->DT--;
 				if (instance->registers->ST > 0) instance->registers->ST--;
 
-				// the GFXWIN_CLEAN check is critical to avoid ISR deadlock!
-				// TODO: use a more elegant method to avoid deadlock
-				// TODO: formalize this
 				if (/*render_queue > 15 ||*/
 					(render_queue > 0))
 				{

@@ -47,27 +47,27 @@ void read_input(uint16_t *emu_key_states, uint16_t *chip8_key_states)
     }
 
     uint8_t idx;
-    uint16_t key_state_current = keypad_get_state();
-    bool emu_input = gpio_get_level(EMU_ALTSWITCH_GPIO_IN);
+    volatile uint16_t key_state_current = keypad_get_state();
+    volatile bool emu_input = gpio_get_level(EMU_ALTSWITCH_GPIO_IN);
 
 	for (idx = 0; idx < EMU_KEY_COUNT; idx++)
 	{
-		if (emu_input && (key_state_current & 1 << idx))
+		if (emu_input && (key_state_current & (1U << idx)))
 		{
 			REGISTER_EMU_KEY_DOWN(idx);
 		}
 		else if (emu_key_states[idx] > 0)
-		emu_key_states[idx] -= 1;
+            emu_key_states[idx] -= 1;
 	}
 
 	for (idx = 0; idx < CHIP8_KEY_COUNT; idx++)
 	{
-		if (!emu_input && (key_state_current & 1 << idx))
+		if (!emu_input && (key_state_current & (1U << idx)))
 		{
 			REGISTER_CHIP8_KEY_DOWN(idx);
 		}
 		else if (chip8_key_states[idx] > 0)
-		chip8_key_states[idx] -= 1;
+            chip8_key_states[idx] -= 1;
 	}
 #undef REGISTER_EMU_KEY_DOWN
 #undef REGISTER_CHIP8_KEY_DOWREGSN

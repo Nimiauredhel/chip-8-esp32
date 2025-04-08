@@ -86,11 +86,11 @@ const uint8_t alien_bytes[25] =
 		0b00110000,
 };
 
-const TickType_t quart_step_delay = pdMS_TO_TICKS(64);
-const TickType_t half_step_delay = pdMS_TO_TICKS(128);
-const TickType_t step_delay = pdMS_TO_TICKS(256);
-const TickType_t halfsec_delay = pdMS_TO_TICKS(512);
-const TickType_t sec_delay = pdMS_TO_TICKS(1024);
+const TickType_t quart_step_delay = pdMS_TO_TICKS(50);
+const TickType_t half_step_delay = pdMS_TO_TICKS(100);
+const TickType_t step_delay = pdMS_TO_TICKS(200);
+const TickType_t halfsec_delay = pdMS_TO_TICKS(500);
+const TickType_t sec_delay = pdMS_TO_TICKS(1000);
 
 GfxWindow_t * app_window = NULL;
 
@@ -172,7 +172,7 @@ void app_loop(void)
 
     gfx_unselect_window(app_window);
 
-    vTaskDelay(sec_delay);
+    vTaskDelay(halfsec_delay);
 
     gfx_select_window(app_window, true);
 	gfx_fill_screen(color_black);
@@ -181,7 +181,7 @@ void app_loop(void)
 	gfx_print_string("small text !@#$%^&*()", 16, 64, color_yellow, 1);
     gfx_unselect_window(app_window);
 
-    vTaskDelay(sec_delay);
+    vTaskDelay(halfsec_delay);
 
     set_audio(A1, 50);
 
