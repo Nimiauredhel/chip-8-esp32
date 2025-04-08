@@ -86,10 +86,11 @@ const uint8_t alien_bytes[25] =
 		0b00110000,
 };
 
-const TickType_t half_step_delay = pdMS_TO_TICKS(125);
-const TickType_t step_delay = pdMS_TO_TICKS(250);
-const TickType_t halfsec_delay = pdMS_TO_TICKS(500);
-const TickType_t sec_delay = pdMS_TO_TICKS(1000);
+const TickType_t quart_step_delay = pdMS_TO_TICKS(64);
+const TickType_t half_step_delay = pdMS_TO_TICKS(128);
+const TickType_t step_delay = pdMS_TO_TICKS(256);
+const TickType_t halfsec_delay = pdMS_TO_TICKS(512);
+const TickType_t sec_delay = pdMS_TO_TICKS(1024);
 
 GfxWindow_t * app_window = NULL;
 
@@ -171,7 +172,7 @@ void app_loop(void)
 
     gfx_unselect_window(app_window);
 
-    vTaskDelay(pdMS_TO_TICKS(halfsec_delay));
+    vTaskDelay(sec_delay);
 
     gfx_select_window(app_window, true);
 	gfx_fill_screen(color_black);
@@ -326,24 +327,24 @@ void app_loop(void)
 
 	while (scale < 1.0f)
 	{
-		scale += 0.125f;
+		scale += 0.25f;
         gfx_select_window(app_window, true);
 		gfx_fill_rect_loop(color_loop, color_loop_length, 160 - (160 * scale), 120 - (120 * scale), 320 * scale, 240 * scale);
         gfx_unselect_window(app_window);
 
         set_audio(D2 / scale, 50);
-        vTaskDelay(half_step_delay);
+        vTaskDelay(quart_step_delay);
         set_audio(A1 / scale, 50);
-        vTaskDelay(half_step_delay);
+        vTaskDelay(quart_step_delay);
         set_audio(Gb1 / scale, 50);
-        vTaskDelay(half_step_delay);
+        vTaskDelay(quart_step_delay);
         set_audio(D1 / scale, 50);
-        vTaskDelay(half_step_delay);
+        vTaskDelay(quart_step_delay);
         set_audio(0, 0);
 
 	}
 
-    vTaskDelay(step_delay);
+    vTaskDelay(half_step_delay);
 
     gfx_select_window(app_window, true);
 	gfx_draw_binary_sprite(hello_sprite, 160-20+2, 120-15, hello_color, 1);
@@ -351,7 +352,7 @@ void app_loop(void)
 	gfx_draw_binary_sprite(alien_sprite, 16, 130, alien_color, 11);
     gfx_unselect_window(app_window);
 
-    vTaskDelay(step_delay);
+    vTaskDelay(half_step_delay);
 
     gfx_select_window(app_window, true);
 	gfx_fill_rect_loop(color_loop, color_loop_length, 0, 0, 320, 240);
@@ -361,18 +362,17 @@ void app_loop(void)
     gfx_unselect_window(app_window);
     set_audio(C2, 50);
 
-    vTaskDelay(step_delay);
+    vTaskDelay(half_step_delay);
 
     gfx_select_window(app_window, true);
 	gfx_fill_rect_loop(color_loop, color_loop_length, 0, 0, 320, 240);
 	gfx_draw_binary_sprite(hello_sprite, 160-80+8, 120-30, hello_color, 4);
 	gfx_draw_binary_sprite(world_sprite, 160-80+8, 120+10, world_color, 4);
 	gfx_draw_binary_sprite(alien_sprite, 48, 130, alien_color, 9);
-
     gfx_unselect_window(app_window);
     set_audio(Gb2, 50);
 
-    vTaskDelay(step_delay);
+    vTaskDelay(half_step_delay);
 
     gfx_select_window(app_window, true);
 	gfx_fill_rect_loop(color_loop, color_loop_length, 0, 0, 320, 240);
@@ -388,17 +388,17 @@ void app_loop(void)
 
 	int16_t alien_x = 152;
 
-	while (alien_x < 328)
+	while (alien_x < 342)
 	{
         gfx_select_window(app_window, true);
 		gfx_fill_rect_loop(color_loop, color_loop_length, 0, 120, 320, 120);
 		gfx_draw_binary_sprite(alien_sprite, alien_x, 130, alien_color, 8);
         gfx_unselect_window(app_window);
         set_audio(Gb1 * ((1 + alien_x) / 320.0f), 50);
-        vTaskDelay(half_step_delay);
+        vTaskDelay(quart_step_delay);
         set_audio(0, 0);
 		alien_x += 32;
-        vTaskDelay(half_step_delay);
+        vTaskDelay(quart_step_delay);
 	}
 
     vTaskDelay(step_delay);

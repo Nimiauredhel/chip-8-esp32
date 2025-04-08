@@ -4,10 +4,14 @@
 #include "common.h"
 #include "data.h"
 #include "keypad.h"
+#include "driver/gpio.h"
 
 #define MAX_SIMULTANEOUS_KEYS 16
 #define CHIP8_INPUT_BUFFER_CYCLES (128)
 #define EMU_INPUT_BUFFER_CYCLES (2)
+
+#define EMU_ALTSWITCH_GPIO_OUT 19
+#define EMU_ALTSWITCH_GPIO_IN 21
 
 typedef enum Chip8KeyIndex
 {
@@ -49,7 +53,7 @@ void read_input(uint16_t *emu_key_states, uint16_t *chip8_key_states);
 uint16_t check_input_buffer(uint16_t *key_states, uint8_t key_idx);
 bool check_input(uint16_t *key_states, uint8_t key_idx);
 
-extern char chip8_key_names[CHIP8_KEY_COUNT][4];
-extern char emu_key_names[EMU_KEY_COUNT][10];
+extern const char chip8_key_names[CHIP8_KEY_COUNT][4];
+extern const char emu_key_names[EMU_KEY_COUNT][10];
 
 #endif
